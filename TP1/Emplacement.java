@@ -1,4 +1,4 @@
-/*
+E/*
  * INF4230 - Intelligence artificielle
  * UQAM / Département d'informatique
  * 

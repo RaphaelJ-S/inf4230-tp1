@@ -11,6 +11,6 @@ execute: TP1.class
 	java -Xmx2g -cp . TP1
 
 clean:
-	rm TP1.class
+	rm *.class
 
 .PHONY: simulateur execute clean
