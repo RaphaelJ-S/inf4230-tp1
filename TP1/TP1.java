@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * Point d'entrée du programme.
@@ -41,15 +42,20 @@ public class TP1 {
 		Heuristique h = new HeuristiqueV1(parseur.ramassage);
 		System.out.println("distance_heuristique(depart,arrivee) = " + h.estimerCoutRestant(parseur.etatInitial, parseur.but));
 
-		for(Map.Entry<String, Emplacement> elem : parseur.ramassage.emplacements.entrySet()) {
-			System.out.println("Element : " + elem.getValue().toString());
-			for(var entry: elem.getValue().routes) {
-				System.out.println("de : " + entry.origine.toString() + " -> vers :" + entry.destination.toString());
-			}
-			
-		}
 
-		parseur.etatInitial.enumererEtatsSuccesseurs();
+		
+		// for(Map.Entry<String, Emplacement> elem : parseur.ramassage.emplacements.entrySet()) {
+		// 	System.out.println("Element : " + elem.getValue().toString());
+		// 	for(var entry: elem.getValue().routes) {
+		// 		System.out.println("de : " + entry.origine.toString() + " -> vers :" + entry.destination.toString());
+		// 	}
+			
+		// }
+		parseur.etatInitial.emplacementVan = parseur.etatInitial.ramassage.emplacements.get("2-10");
+
+		List<Successeur> successeurs = (List)parseur.etatInitial.enumererEtatsSuccesseurs();
+		System.out.println(successeurs.size());
+		System.out.println(successeurs);
 
 
 		/* Appel à l'algorithme A* : enregistrement du plan dans la List

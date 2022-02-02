@@ -71,7 +71,7 @@ public class Etat implements Comparable<Etat> {
                 successeurs.add(new Successeur(dechargerColis(indexColis), "A", this.ramassage.dureeDechargement));
         }
         for(Route aEffectuer : deplacementsPossibles) {
-            successeurs.add(new Successeur(effectuerDeplacement(aEffectuer), "H", aEffectuer.destination.type == "#" ? 1 : 2));
+            successeurs.add(new Successeur(effectuerDeplacement(aEffectuer), aEffectuer.destination.type, aEffectuer.destination.type.equals("-") ? 2 : 1));
         }
 
 		
@@ -184,10 +184,18 @@ public class Etat implements Comparable<Etat> {
         return -1;
     }
 
-
+    //Retourne un Etat ayant effectué un déplacement.
     private Etat effectuerDeplacement(Route deplacement) {
-        return this.clone();
+        Etat copie = this.clone();
+        copie.emplacementVan = deplacement.destination;
+        copie.parent = this;
+        copie.actionFromParent = deplacement.destination.type;
+
+
+        return copie;
     }
+
+    //Retourne un État ayant effectué un chargement de colis.
     private Etat chargerColis() {
         Etat copie = this.clone();
         int index = trouverIndexColis();
@@ -204,6 +212,7 @@ public class Etat implements Comparable<Etat> {
         return copie;
     }
 
+    //Retourne un État ayant effectué un déchargement de colis.
     private Etat dechargerColis(int indexADecharger) {
         Etat copie = this.clone();
         //On décharge le premier colis dans la van.

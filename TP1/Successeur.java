@@ -21,4 +21,9 @@ public class Successeur {
         this.action = action;
         this.cout = cout;
     }
+
+    @Override
+    public String toString() {
+        return action + "|" + cout + "|" + etat.toString();
+    }
 }
