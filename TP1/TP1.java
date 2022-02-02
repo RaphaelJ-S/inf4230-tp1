@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Point d'entrée du programme.
@@ -40,9 +41,13 @@ public class TP1 {
 		Heuristique h = new HeuristiqueV1(parseur.ramassage);
 		System.out.println("distance_heuristique(depart,arrivee) = " + h.estimerCoutRestant(parseur.etatInitial, parseur.but));
 
-		System.out.println("ramassage : " + parseur.ramassage.emplacements.toString());
-
-		System.out.println("Emplacement : " + parseur.ramassage.destination.toString());
+		for(Map.Entry<String, Emplacement> elem : parseur.ramassage.emplacements.entrySet()) {
+			System.out.println("Element : " + elem.getValue().toString());
+			for(var entry: elem.getValue().routes) {
+				System.out.println("de : " + entry.origine.toString() + " -> vers :" + entry.destination.toString());
+			}
+			
+		}
 
 
 		/* Appel à l'algorithme A* : enregistrement du plan dans la List

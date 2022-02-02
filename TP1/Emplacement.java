@@ -39,7 +39,7 @@ public class Emplacement implements Comparable<Emplacement> {
 
     @Override
     public String toString(){
-        // Cette ligne est la ligne originale : return nom 
+        //return nom //Ligne originale
         return "(" + nom + ", " + type + ", " + positionGeographique.toString() + ")";
     }
 
