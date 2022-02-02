@@ -40,7 +40,7 @@ public class Emplacement implements Comparable<Emplacement> {
     @Override
     public String toString(){
         //return nom //Ligne originale
-        return "(" + nom + ", " + type + ", " + positionGeographique.toString() + ")";
+        return "("+id+"(" + nom + ", " + type + ", " + positionGeographique.toString() + ")";
     }
 
 }

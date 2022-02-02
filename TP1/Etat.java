@@ -7,6 +7,7 @@
  */
 
 import java.util.*;
+import java.awt.geom.Point2D;
 
 
 public class Etat implements Comparable<Etat> {
@@ -58,6 +59,21 @@ public class Etat implements Comparable<Etat> {
     public Collection<Successeur> enumererEtatsSuccesseurs()
     {
         final LinkedList<Successeur> successeurs = new LinkedList<Successeur>();
+        final ArrayList<Route> deplacementsPossibles = this.emplacementVan.routes;
+        final String type = this.emplacementVan.type.equals("C") ? 
+            typeEmplacementColis(this.emplacementVan.positionGeographique) : 
+            this.emplacementVan.type;
+        if(type.equals("C")) {
+            successeurs.add(new Successeur(chargerColis(), "C", this.ramassage.dureeChargement));
+        }else if(type.equals("A")){
+            int indexColis = peutDecharger();
+            if(indexColis != -1)
+                successeurs.add(new Successeur(dechargerColis(indexColis), "A", this.ramassage.dureeDechargement));
+        }
+        for(Route aEffectuer : deplacementsPossibles) {
+            successeurs.add(new Successeur(effectuerDeplacement(aEffectuer), "H", aEffectuer.destination.type == "#" ? 1 : 2));
+        }
+
 		
 		// À compléter.
         
@@ -134,12 +150,80 @@ public class Etat implements Comparable<Etat> {
         s += "\n";
         return s;
     }
+
+    private String typeEmplacementColis(Point2D pos) {
+        String type = "C";
+        for(int i = 0; i < this.emplacementsColis.length; i++) {
+            if(this.emplacementsColis[i].positionGeographique.distance(pos) == 0.0) {
+                type =  this.emplacementsColis[i].type;
+                break;
+            }
+        }
+        return type;
+    }
+
+    //Retourne l'index du premier colis à décharger s'il existe.
+    private int peutDecharger() {
+        int i = 0;
+        int indexColis = -1;
+        while(i < this.colisRecuperes.length && indexColis == -1){
+            if(this.colisRecuperes[i]) {
+                indexColis = i;
+            }
+            i++;
+        }
+        return indexColis;
+    }
+    //Retourne l'index du colis si on se trouve sur une case qui en contient un.
+    private int trouverIndexColis() {
+        for(int i = 0; i < this.emplacementsColis.length; i++) {
+            if(this.emplacementsColis[i].id == this.emplacementVan.id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    private Etat effectuerDeplacement(Route deplacement) {
+        return this.clone();
+    }
+    private Etat chargerColis() {
+        Etat copie = this.clone();
+        int index = trouverIndexColis();
+        if(index == -1) return null;
+        //Le colis ne se trouve plus à cet emplacement alors on le remplace par une case normale.
+        copie.emplacementsColis[index].type = "#";
+        //Je ne sais pas si cet attribut a de l'important vu qu'on peut avoir un nombre infini de colis.
+        copie.colisRecuperes[index] = true;
+        copie.colisCharge = true;
+        copie.parent = this;
+        copie.actionFromParent = "C";
+        //manque le calcul des fonctions f(x) = g(x) + h(x)
+
+        return copie;
+    }
+
+    private Etat dechargerColis(int indexADecharger) {
+        Etat copie = this.clone();
+        //On décharge le premier colis dans la van.
+
+        copie.colisRecuperes[indexADecharger] = false;
+        copie.colisCharge = false;
+        copie.parent = this;
+        copie.actionFromParent = "A";
+        //manque le calcul des fonctions f(x) = g(x) + h(x)
+
+
+        return copie;
+    }
+
     
     public int calculCout(Emplacement e)
     {
-        int cout = 1;
-        if("-".equals(e.type)) cout = 2;
-        return cout;
+        // int cout = 1;
+        // if("-".equals(e.type)) cout = 2;
+        return "-".equals(e.type) ? 2 : 1;
     }
 
 }

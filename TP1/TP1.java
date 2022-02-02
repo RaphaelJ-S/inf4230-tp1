@@ -49,6 +49,8 @@ public class TP1 {
 			
 		}
 
+		parseur.etatInitial.enumererEtatsSuccesseurs();
+
 
 		/* Appel à l'algorithme A* : enregistrement du plan dans la List
 		 * 

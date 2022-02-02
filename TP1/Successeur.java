@@ -15,4 +15,10 @@ public class Successeur {
     protected Etat     etat;
     protected String   action;
     protected double   cout;
+
+    public Successeur(Etat etat, String action, double cout) {
+        this.etat = etat;
+        this.action = action;
+        this.cout = cout;
+    }
 }
