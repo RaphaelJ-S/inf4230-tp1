@@ -40,6 +40,11 @@ public class TP1 {
 		Heuristique h = new HeuristiqueV1(parseur.ramassage);
 		System.out.println("distance_heuristique(depart,arrivee) = " + h.estimerCoutRestant(parseur.etatInitial, parseur.but));
 
+		System.out.println("ramassage : " + parseur.ramassage.emplacements.toString());
+
+		System.out.println("Emplacement : " + parseur.ramassage.destination.toString());
+
+
 		/* Appel à l'algorithme A* : enregistrement du plan dans la List
 		 * 
 		 * À la fin de l'appel plan doit intégrer une liste de String donnant

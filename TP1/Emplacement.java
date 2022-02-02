@@ -1,4 +1,4 @@
-E/*
+/*
  * INF4230 - Intelligence artificielle
  * UQAM / Département d'informatique
  * 
@@ -39,7 +39,8 @@ public class Emplacement implements Comparable<Emplacement> {
 
     @Override
     public String toString(){
-        return nom;
+        // Cette ligne est la ligne originale : return nom 
+        return "(" + nom + ", " + type + ", " + positionGeographique.toString() + ")";
     }
 
 }
