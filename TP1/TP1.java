@@ -54,7 +54,12 @@ public class TP1 {
 		parseur.etatInitial.emplacementVan = parseur.etatInitial.ramassage.emplacements.get("1-10");
 
 		List<Successeur> successeurs = (List)parseur.etatInitial.enumererEtatsSuccesseurs();
-		System.out.println(successeurs.size());
+
+		System.out.println(successeurs);
+
+		successeurs = (List)successeurs.get(0).etat.enumererEtatsSuccesseurs();
+
+		System.out.println("----");
 		System.out.println(successeurs);
 
 
@@ -74,6 +79,7 @@ public class TP1 {
 		 *
 		 */
 		final List<String> plan = AEtoile.composerPlan(parseur.etatInitial, parseur.but, h);
+
 		//ramassageH01.txt
 		//urgenceH01.txt
 		// Écriture du plan dans le fichier de sortie + affichage console

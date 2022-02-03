@@ -57,7 +57,7 @@ public class AEtoile {
         //  ------   Vérifier si s.etat a un état équivalent dans open.
         //  --------   Si un tel état existe dans open, comparer les valeurs de f et retenir la moindre des deux
         //  ------   Ajoutez s.etat dans open si aucun des cas précédents n'est présent.
-		
+
         return plan;
     }
 	//  Tout à la fin, n'oubliez pas de commenter les affichages de traçage

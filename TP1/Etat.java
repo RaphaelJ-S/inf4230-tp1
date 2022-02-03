@@ -60,10 +60,8 @@ public class Etat implements Comparable<Etat> {
     {
         final LinkedList<Successeur> successeurs = new LinkedList<Successeur>();
         final ArrayList<Route> deplacementsPossibles = this.emplacementVan.routes;
-        final String type = this.emplacementVan.type.equals("C") ? 
-            typeEmplacementColis(this.emplacementVan.positionGeographique) : 
-            this.emplacementVan.type;
-        if(type.equals("C")) {
+        final String type = this.emplacementVan.type;
+        if(type.equals("C") && !colisEstCharge()) {
             successeurs.add(new Successeur(chargerColis(), "C", this.ramassage.dureeChargement));
         }else if(type.equals("A")){
             int indexColis = peutDecharger();
@@ -151,23 +149,22 @@ public class Etat implements Comparable<Etat> {
         return s;
     }
 
-    private String typeEmplacementColis(Point2D pos) {
-        String type = "C";
-        for(int i = 0; i < this.emplacementsColis.length; i++) {
-            if(this.emplacementsColis[i].positionGeographique.distance(pos) == 0.0) {
-                type =  this.emplacementsColis[i].type;
-                break;
-            }
+    //Détermine si le colis qui se trouve sur la case présente est déjà chargé ou non.
+    private boolean colisEstCharge() {
+        boolean colisCharge = true;
+        int index = trouverIndexColis();
+        if(index != -1) {
+            colisCharge = this.colisRecuperes[index];
         }
-        return type;
-    }
 
+        return colisCharge;
+    }
     //Retourne l'index du premier colis à décharger s'il existe.
     private int peutDecharger() {
         int i = 0;
         int indexColis = -1;
         while(i < this.colisRecuperes.length && indexColis == -1){
-            if(this.colisRecuperes[i]) {
+            if(this.colisRecuperes[i] && this.emplacementsColis[i] != null) {
                 indexColis = i;
             }
             i++;
@@ -183,12 +180,25 @@ public class Etat implements Comparable<Etat> {
         }
         return -1;
     }
+    //Retourne la liste des index des colis chargés ou qui restent à charger selon le paramètre chercheCharger
+    private List<Integer> trouverTousIndexColis(boolean chercheCharge) {
+        ArrayList<Integer> indexColis = new ArrayList<>(this.colisRecuperes.length);
+        for(int i = 0; i< colisRecuperes.length; i++) {
+            if(colisRecuperes[i] == chercheCharge){
+                indexColis.add(i);
+            }
+        }
+        return indexColis;
+    }
 
     //Retourne un Etat ayant effectué un déplacement.
     private Etat effectuerDeplacement(Route deplacement) {
         Etat copie = this.clone();
         copie.emplacementVan = deplacement.destination;
         copie.parent = this;
+        for(Integer index : trouverTousIndexColis(true)) {
+            copie.emplacementsColis[index] = deplacement.destination;
+        }
         copie.actionFromParent = deplacement.destination.type;
 
 
@@ -200,11 +210,10 @@ public class Etat implements Comparable<Etat> {
         Etat copie = this.clone();
         int index = trouverIndexColis();
         if(index == -1) return null;
-        //Le colis ne se trouve plus à cet emplacement alors on le remplace par une case normale.
-        copie.emplacementsColis[index].type = "#";
+        //Le colis ne se trouve plus à cet emplacement alors on le remplace par l'emplacement présent.
+        copie.emplacementsColis[index] = copie.emplacementVan;
         //Je ne sais pas si cet attribut a de l'important vu qu'on peut avoir un nombre infini de colis.
         copie.colisRecuperes[index] = true;
-        copie.colisCharge = true;
         copie.parent = this;
         copie.actionFromParent = "C";
         //manque le calcul des fonctions f(x) = g(x) + h(x)
@@ -217,8 +226,7 @@ public class Etat implements Comparable<Etat> {
         Etat copie = this.clone();
         //On décharge le premier colis dans la van.
 
-        copie.colisRecuperes[indexADecharger] = false;
-        copie.colisCharge = false;
+        copie.emplacementsColis[indexADecharger] = null;
         copie.parent = this;
         copie.actionFromParent = "A";
         //manque le calcul des fonctions f(x) = g(x) + h(x)
