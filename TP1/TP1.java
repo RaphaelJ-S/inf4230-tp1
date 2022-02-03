@@ -51,7 +51,7 @@ public class TP1 {
 		// 	}
 			
 		// }
-		parseur.etatInitial.emplacementVan = parseur.etatInitial.ramassage.emplacements.get("2-10");
+		parseur.etatInitial.emplacementVan = parseur.etatInitial.ramassage.emplacements.get("1-10");
 
 		List<Successeur> successeurs = (List)parseur.etatInitial.enumererEtatsSuccesseurs();
 		System.out.println(successeurs.size());
