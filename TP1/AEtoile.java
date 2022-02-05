@@ -36,7 +36,7 @@ public class AEtoile {
         final LinkedList<String> plan =  new LinkedList<String>(); //variable à retourner
         
 		 //  Shéma de l'algorithme A*    
-		
+		/*
         //initialisation des valeurs de distances (exacte et heuristique)
         etatInitial.g = 0;
         etatInitial.h = heuristique.estimerCoutRestant(etatInitial, but);
@@ -108,7 +108,7 @@ public class AEtoile {
             }
 
         }
-		/*
+		*/
         return plan;
     }
 	//  Tout à la fin, n'oubliez pas de commenter les affichages de traçage
