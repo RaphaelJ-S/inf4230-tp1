@@ -14,9 +14,9 @@ import java.util.*;
 import java.lang.Math;
 import java.awt.geom.Point2D;
 
-public class HeuristiqueV1 extends Heuristique {
+public class HeuristiqueV2 extends Heuristique {
 
-    HeuristiqueV1(final Ramassage monde) {
+    HeuristiqueV2(final Ramassage monde) {
         super(monde);
     }
 	
@@ -65,7 +65,7 @@ public class HeuristiqueV1 extends Heuristique {
                 Point2D emplacement = emplacementsRestants.get(i);
                 double px = emplacement.getX() - emplacementCourant.getX();
                 double py = emplacement.getY() - emplacementCourant.getY();
-                double distance = Math.abs(px) + Math.abs(py);
+                double distance = Math.sqrt((px * px) + (py * py));
                 
                 if(distance < minDistance)
                 {
