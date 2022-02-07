@@ -59,6 +59,7 @@ public class HeuristiqueV1 extends Heuristique {
         {
             int indexMinDistance = 0;
             double minDistance = Double.MAX_VALUE;
+            Point2D emplacementSuivant = new Point2D.Float(0,0);
 
             for(int i = 0 ; i < emplacementsRestants.size(); ++i)
             {
@@ -69,11 +70,12 @@ public class HeuristiqueV1 extends Heuristique {
                 
                 if(distance < minDistance)
                 {
-                    emplacementCourant = emplacement;
+                    emplacementSuivant = emplacement;
                     minDistance = distance;
                     indexMinDistance = i;
                 }
             }
+            emplacementCourant = emplacementSuivant;
             emplacementsRestants.remove(indexMinDistance);
             // On ajoute le point de livraison une fois tous les paquets récupérés
             if(emplacementsRestants.size() == 0 && !PointDeLivraisonAjoute)
