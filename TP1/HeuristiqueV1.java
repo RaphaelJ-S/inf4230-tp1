@@ -30,6 +30,7 @@ public class HeuristiqueV1 extends Heuristique {
     public double estimerCoutRestant(final Etat etat, final But but) {
         double coutChargerColis = 30;
         double coutLivrerColis = 30;
+        double coutDeplacementRegulier = 2;
         double sommeDuree = 0;
 
     	// À Compléter.
@@ -64,8 +65,8 @@ public class HeuristiqueV1 extends Heuristique {
             for(int i = 0 ; i < emplacementsRestants.size(); ++i)
             {
                 Point2D emplacement = emplacementsRestants.get(i);
-                double px = emplacement.getX() - emplacementCourant.getX();
-                double py = emplacement.getY() - emplacementCourant.getY();
+                double px = (emplacement.getX() - emplacementCourant.getX()) * coutDeplacementRegulier;
+                double py = (emplacement.getY() - emplacementCourant.getY()) * coutDeplacementRegulier;
                 double distance = Math.abs(px) + Math.abs(py);
                 
                 if(distance < minDistance)

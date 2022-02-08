@@ -69,7 +69,7 @@ public class Etat implements Comparable<Etat> {
                 successeurs.add(new Successeur(dechargerColis(indexColis), "A", this.ramassage.dureeDechargement));
         }
         for(Route aEffectuer : deplacementsPossibles) {
-            successeurs.add(new Successeur(effectuerDeplacement(aEffectuer), aEffectuer.destination.type, aEffectuer.destination.type.equals("-") ? 2 : 1));
+            successeurs.add(new Successeur(effectuerDeplacement(aEffectuer), aEffectuer.destination.type, aEffectuer.destination.type.equals("-") ? 3 : 2));
         }
 
 		
