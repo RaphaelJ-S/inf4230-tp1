@@ -77,7 +77,7 @@ public class Etat implements Comparable<Etat> {
             successeurs.add(new Successeur(
                     effectuerDeplacement(aEffectuer),
                     aEffectuer.destination.type,
-                    aEffectuer.destination.type.equals("-") ? 2 : 1));
+                    aEffectuer.destination.type.equals("-") ? 3 : 2));
         }
 
         // À compléter.
@@ -259,7 +259,7 @@ public class Etat implements Comparable<Etat> {
     public int calculCout(Emplacement e) {
         // int cout = 1;
         // if("-".equals(e.type)) cout = 2;
-        return "-".equals(e.type) ? 2 : 1;
+        return "-".equals(e.type) ? 3 : 2;
     }
 
 }
