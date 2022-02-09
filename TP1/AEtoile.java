@@ -104,7 +104,6 @@ public class AEtoile {
                 }
             }
         }
-
         return plan;
     }
     // Tout à la fin, n'oubliez pas de commenter les affichages de traçage

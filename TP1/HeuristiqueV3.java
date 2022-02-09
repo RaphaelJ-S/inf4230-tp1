@@ -10,11 +10,11 @@ public class HeuristiqueV3 extends Heuristique {
     @Override
     public double estimerCoutRestant(final Etat etat, final But but) {
         double min = 100000000.0;
+        double h = 0;
         Emplacement cible = null;
         // index de tous les colis qui restent à charger
         List<Integer> restant = etat.trouverTousIndexColis(false);
         List<Integer> aDeposer = etat.trouverTousIndexColis(true);
-
         // calcul du min de la distance euclidienne pour tous les colis restants
         for (Integer i : restant) {
             Point2D posColis = etat.emplacementsColis[i].positionGeographique;
@@ -29,12 +29,15 @@ public class HeuristiqueV3 extends Heuristique {
             cible = etat.ramassage.destination;
             min = etat.emplacementVan.positionGeographique.distance(cible.positionGeographique);
         }
+
+        h = min + 30 * restant.size();
+
         for (Integer i : aDeposer) {
             if (!etat.emplacementsColis[i].equals(etat.ramassage.destination))
-                min += 30;
+                h += 30;
         }
 
-        return min + 30 * restant.size();
+        return h;
     }
 
 }

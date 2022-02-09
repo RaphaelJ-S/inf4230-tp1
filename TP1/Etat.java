@@ -185,6 +185,7 @@ public class Etat implements Comparable<Etat> {
         // s += emplacementsColis[i] == null ? "--" : emplacementsColis[i].nom;
         // }
         // s += "\n";
+        // return s;
         return this.actionFromParent;
     }
 
@@ -205,7 +206,7 @@ public class Etat implements Comparable<Etat> {
         int i = 0;
         int indexColis = -1;
         while (i < this.colisRecuperes.length && indexColis == -1) {
-            if (this.colisRecuperes[i]) {
+            if (this.colisRecuperes[i] && !this.emplacementsColis[i].equals(this.emplacementVan)) {
                 indexColis = i;
             }
             i++;
@@ -251,11 +252,8 @@ public class Etat implements Comparable<Etat> {
         int index = trouverIndexColis();
         if (index == -1)
             return null;
-        // Je ne sais pas si cet attribut a de l'important vu qu'on peut avoir un nombre
-        // infini de colis.
         copie.colisRecuperes[index] = true;
         copie.parent = this;
-        // manque le calcul des fonctions f(x) = g(x) + h(x)
 
         return copie;
     }
@@ -264,17 +262,13 @@ public class Etat implements Comparable<Etat> {
     private Etat dechargerColis(int indexADecharger) {
         Etat copie = this.clone();
         // On décharge le premier colis dans la van.
-
         copie.emplacementsColis[indexADecharger] = this.emplacementVan;
         copie.parent = this;
-        // manque le calcul des fonctions f(x) = g(x) + h(x)
 
         return copie;
     }
 
     public int calculCout(Emplacement e) {
-        // int cout = 1;
-        // if("-".equals(e.type)) cout = 2;
         return "-".equals(e.type) ? 3 : 2;
     }
 

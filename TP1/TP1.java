@@ -42,6 +42,20 @@ public class TP1 {
 		System.out.println(
 				"distance_heuristique(depart,arrivee) = " + h.estimerCoutRestant(parseur.etatInitial, parseur.but));
 
+		// Tests de positionnement
+
+		// parseur.etatInitial.emplacementVan =
+		// parseur.ramassage.emplacements.get("9-6");
+		// parseur.etatInitial.colisRecuperes = new boolean[] { true, true };
+		// List<Successeur> test = (List<Successeur>)
+		// parseur.etatInitial.enumererEtatsSuccesseurs();
+		// parseur.etatInitial = test.get(0).etat;
+		// test = (List<Successeur>) parseur.etatInitial.enumererEtatsSuccesseurs();
+
+		// for (var e : test) {
+		// System.out.println(e);
+
+		// }
 		/*
 		 * Appel à l'algorithme A* : enregistrement du plan dans la List
 		 * 
