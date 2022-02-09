@@ -8,7 +8,7 @@ run: execute simulateur
 simulateur: ramassage.jar
 	java -jar ramassage.jar
 
-compiler: Successeur.class Route.class Ramassage.class ParseurH.class Heuristique.class HeuristiqueV1.class Etat.class Emplacement.class Colis.class But.class AEtoile.class TP1.class
+compiler: Successeur.class Route.class Ramassage.class ParseurH.class Heuristique.class HeuristiqueV1.class HeuristiqueV2.class HeuristiqueV3.class Etat.class Emplacement.class Colis.class But.class AEtoile.class TP1.class
 
 TP1.class: TP1.java
 	javac TP1.java
@@ -30,6 +30,12 @@ Heuristique.class: Heuristique.java
 
 HeuristiqueV1.class: HeuristiqueV1.java
 	javac HeuristiqueV1.java
+
+HeuristiqueV2.class: HeuristiqueV2.java
+	javac HeuristiqueV2.java
+
+HeuristiqueV3.class: HeuristiqueV3.java
+	javac HeuristiqueV3.java
 
 Etat.class: Etat.java
 	javac Etat.java

@@ -61,12 +61,12 @@ public class Etat implements Comparable<Etat> {
         final ArrayList<Route> deplacementsPossibles = this.emplacementVan.routes;
         final String type = this.emplacementVan.type;
         if (type.equals("C") && !colisEstCharge()) {
-        	
+
             successeurs.add(new Successeur(
                     chargerColis(),
                     "Ramasser()",
                     this.ramassage.dureeChargement));
-        	
+
         } else if (type.equals("A")) {
             int indexColis = peutDecharger();
             if (indexColis != -1) {
@@ -78,26 +78,30 @@ public class Etat implements Comparable<Etat> {
 
         }
         for (Route aEffectuer : deplacementsPossibles) {
-        	
-            double differenceCoordonneesX = aEffectuer.destination.positionGeographique.getX() - aEffectuer.origine.positionGeographique.getX();
-            double differenceCoordonneesY = aEffectuer.destination.positionGeographique.getY() - aEffectuer.origine.positionGeographique.getY();
+
+            double differenceCoordonneesX = aEffectuer.destination.positionGeographique.getX()
+                    - aEffectuer.origine.positionGeographique.getX();
+            double differenceCoordonneesY = aEffectuer.destination.positionGeographique.getY()
+                    - aEffectuer.origine.positionGeographique.getY();
             String nomDirection;
 
-            if(differenceCoordonneesX == -1 && differenceCoordonneesY == 0){
+            if (differenceCoordonneesX == -1 && differenceCoordonneesY == 0) {
                 nomDirection = "Nord";
-            } else if(differenceCoordonneesX == 1 && differenceCoordonneesY == 0){
+            } else if (differenceCoordonneesX == 1 && differenceCoordonneesY == 0) {
                 nomDirection = "Sud";
-            } else if(differenceCoordonneesX == 0 && differenceCoordonneesY == -1){
+            } else if (differenceCoordonneesX == 0 && differenceCoordonneesY == -1) {
                 nomDirection = "Ouest";
             } else {
                 nomDirection = "Est";
             }
 
-        	
             successeurs.add(new Successeur(
                     effectuerDeplacement(aEffectuer),
-                    nomDirection + " = Lieu " + (int)aEffectuer.origine.positionGeographique.getX() + "-" + (int)aEffectuer.origine.positionGeographique.getY() + " -> Lieu " + (int)aEffectuer.destination.positionGeographique.getX() + "-" + (int)aEffectuer.destination.positionGeographique.getY() + ")",
-                    aEffectuer.destination.type.equals("-") ? (double)3 : (double)2));
+                    nomDirection + " = Lieu " + (int) aEffectuer.origine.positionGeographique.getX() + "-"
+                            + (int) aEffectuer.origine.positionGeographique.getY() + " -> Lieu "
+                            + (int) aEffectuer.destination.positionGeographique.getX() + "-"
+                            + (int) aEffectuer.destination.positionGeographique.getY() + ")",
+                    aEffectuer.destination.type.equals("-") ? (double) 3 : (double) 2));
         }
 
         // À compléter.
@@ -174,13 +178,13 @@ public class Etat implements Comparable<Etat> {
 
     @Override
     public String toString() {
-        /*String s = "ETAT: f=" + f + "  g=" + g + "\n";
-        s += "  Pos=" + emplacementVan.nom + "";
-        for (int i = 0; i < emplacementsColis.length; i++) {
-            s += "\n  PosColis[i]=";
-            s += emplacementsColis[i] == null ? "--" : emplacementsColis[i].nom;
-        }
-        s += "\n";*/
+        // String s = "ETAT: f=" + f + " g=" + g + "\n";
+        // s += " Pos=" + emplacementVan.nom + "";
+        // for (int i = 0; i < emplacementsColis.length; i++) {
+        // s += "\n PosColis[i]=";
+        // s += emplacementsColis[i] == null ? "--" : emplacementsColis[i].nom;
+        // }
+        // s += "\n";
         return this.actionFromParent;
     }
 
@@ -201,7 +205,7 @@ public class Etat implements Comparable<Etat> {
         int i = 0;
         int indexColis = -1;
         while (i < this.colisRecuperes.length && indexColis == -1) {
-            if (this.colisRecuperes[i] && this.emplacementsColis[i] != null) {
+            if (this.colisRecuperes[i]) {
                 indexColis = i;
             }
             i++;
@@ -216,13 +220,13 @@ public class Etat implements Comparable<Etat> {
                 return i;
             }
         }
-        
+
         return -1;
     }
 
     // Retourne la liste des index des colis chargés ou qui restent à charger selon
     // le paramètre chercheCharger
-    private List<Integer> trouverTousIndexColis(boolean chercheCharge) {
+    public List<Integer> trouverTousIndexColis(boolean chercheCharge) {
         ArrayList<Integer> indexColis = new ArrayList<>(this.colisRecuperes.length);
         for (int i = 0; i < colisRecuperes.length; i++) {
             if (colisRecuperes[i] == chercheCharge) {
@@ -237,9 +241,6 @@ public class Etat implements Comparable<Etat> {
         Etat copie = this.clone();
         copie.emplacementVan = deplacement.destination;
         copie.parent = this;
-        for (Integer index : trouverTousIndexColis(true)) {
-            copie.emplacementsColis[index] = deplacement.destination;
-        }
 
         return copie;
     }
@@ -250,9 +251,6 @@ public class Etat implements Comparable<Etat> {
         int index = trouverIndexColis();
         if (index == -1)
             return null;
-        // Le colis ne se trouve plus à cet emplacement alors on le remplace par
-        // l'emplacement présent.
-        copie.emplacementsColis[index] = copie.emplacementVan;
         // Je ne sais pas si cet attribut a de l'important vu qu'on peut avoir un nombre
         // infini de colis.
         copie.colisRecuperes[index] = true;
@@ -267,7 +265,7 @@ public class Etat implements Comparable<Etat> {
         Etat copie = this.clone();
         // On décharge le premier colis dans la van.
 
-        copie.emplacementsColis[indexADecharger] = null;
+        copie.emplacementsColis[indexADecharger] = this.emplacementVan;
         copie.parent = this;
         // manque le calcul des fonctions f(x) = g(x) + h(x)
 
