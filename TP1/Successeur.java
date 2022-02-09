@@ -1,4 +1,5 @@
- * INF4230 - Intelligence artificielle
+/* 
+* INF4230 - Intelligence artificielle
  * UQAM / DÃ©partement d'informatique
  * 
  * Hiver 2017 / TP1
