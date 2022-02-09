@@ -61,23 +61,43 @@ public class Etat implements Comparable<Etat> {
         final ArrayList<Route> deplacementsPossibles = this.emplacementVan.routes;
         final String type = this.emplacementVan.type;
         if (type.equals("C") && !colisEstCharge()) {
+        	
             successeurs.add(new Successeur(
                     chargerColis(),
-                    "C",
+                    "Ramasser()",
                     this.ramassage.dureeChargement));
+        	
         } else if (type.equals("A")) {
             int indexColis = peutDecharger();
-            if (indexColis != -1)
+            if (indexColis != -1) {
                 successeurs.add(new Successeur(
                         dechargerColis(indexColis),
-                        "A",
+                        "Deposer()",
                         this.ramassage.dureeDechargement));
+            }
+
         }
         for (Route aEffectuer : deplacementsPossibles) {
+        	
+            double differenceCoordonneesX = aEffectuer.origine.positionGeographique.getX() - aEffectuer.destination.positionGeographique.getX();
+            double differenceCoordonneesY = aEffectuer.origine.positionGeographique.getY() - aEffectuer.destination.positionGeographique.getY();
+            String nomDirection;
+
+            if(differenceCoordonneesX == -1 && differenceCoordonneesY == 0){
+                nomDirection = "Nord";
+            } else if(differenceCoordonneesX == 1 && differenceCoordonneesY == 0){
+                nomDirection = "Sud";
+            } else if(differenceCoordonneesX == 0 && differenceCoordonneesY == -1){
+                nomDirection = "Ouest";
+            } else {
+                nomDirection = "Est";
+            }
+
+        	
             successeurs.add(new Successeur(
                     effectuerDeplacement(aEffectuer),
-                    aEffectuer.destination.type,
-                    aEffectuer.destination.type.equals("-") ? 3 : 2));
+                    nomDirection + " = Lieu " + (int)aEffectuer.origine.positionGeographique.getX() + "-" + (int)aEffectuer.origine.positionGeographique.getY() + " -> Lieu " + (int)aEffectuer.destination.positionGeographique.getX() + "-" + (int)aEffectuer.destination.positionGeographique.getY() + ")",
+                    aEffectuer.destination.type.equals("-") ? (double)3 : (double)2));
         }
 
         // À compléter.
@@ -154,14 +174,14 @@ public class Etat implements Comparable<Etat> {
 
     @Override
     public String toString() {
-        String s = "ETAT: f=" + f + "  g=" + g + "\n";
+        /*String s = "ETAT: f=" + f + "  g=" + g + "\n";
         s += "  Pos=" + emplacementVan.nom + "";
         for (int i = 0; i < emplacementsColis.length; i++) {
             s += "\n  PosColis[i]=";
             s += emplacementsColis[i] == null ? "--" : emplacementsColis[i].nom;
         }
-        s += "\n";
-        return s;
+        s += "\n";*/
+        return this.actionFromParent;
     }
 
     // Détermine si le colis qui se trouve sur la case présente est déjà chargé ou
@@ -196,6 +216,7 @@ public class Etat implements Comparable<Etat> {
                 return i;
             }
         }
+        
         return -1;
     }
 
@@ -219,7 +240,6 @@ public class Etat implements Comparable<Etat> {
         for (Integer index : trouverTousIndexColis(true)) {
             copie.emplacementsColis[index] = deplacement.destination;
         }
-        copie.actionFromParent = deplacement.destination.type;
 
         return copie;
     }
@@ -237,7 +257,6 @@ public class Etat implements Comparable<Etat> {
         // infini de colis.
         copie.colisRecuperes[index] = true;
         copie.parent = this;
-        copie.actionFromParent = "C";
         // manque le calcul des fonctions f(x) = g(x) + h(x)
 
         return copie;
@@ -250,7 +269,6 @@ public class Etat implements Comparable<Etat> {
 
         copie.emplacementsColis[indexADecharger] = null;
         copie.parent = this;
-        copie.actionFromParent = "A";
         // manque le calcul des fonctions f(x) = g(x) + h(x)
 
         return copie;
