@@ -79,7 +79,7 @@ public class AEtoile {
                 s.parent = e;
         //  ------ Calculer s.etat.g puis s.etat.f
                 s.g = e.g + successeur.cout;
-                s.h = heuristique.estimerCoutRestant(etatInitial, but);
+                s.h = heuristique.estimerCoutRestant(s, but);
                 s.f = s.g + s.h;
         //  ------ Vérifier que s.etat n'a pas d'état équivalent dans closed. (si oui, alors l'ignorer car l'heuristique admissible nous dit que s.etat aura un f supérieur ou égal)
                 if(closed.contains(s))
