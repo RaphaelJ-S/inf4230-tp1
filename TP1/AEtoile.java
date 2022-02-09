@@ -35,27 +35,31 @@ public class AEtoile {
 		// la sortie est une liste d'actions, chacune étant une chaîne de caractères
         final LinkedList<String> plan =  new LinkedList<String>(); //variable à retourner
         
-		 //  Shéma de l'algorithme A*    
-		/*
+		 //  Schéma de l'algorithme A*    
+		
         //initialisation des valeurs de distances (exacte et heuristique)
         etatInitial.g = 0;
         etatInitial.h = heuristique.estimerCoutRestant(etatInitial, but);
         etatInitial.f= etatInitial.g + etatInitial.h;
-
          //  Suite de l'algorithme A* - A COMPLÉTER
         
         //  -- Ajouter etatInitial dans open.
         open.add(etatInitial);
         //  -- Dans une boucle qui itère sur la liste open tant que celle-ci n'est pas vide.
-        while(open.size() > 0)
-        {
+        while(open.size() > 0){
             Etat e = open.first();
+            
         //  ---- Sortir d'open l'état e avec e.f minimal. 
             open.remove(e);
         //  ---- Vérifier si l'état e satisfait le but. 
             if(but.estStatisfait(e))
             {
                 //  ------ Si oui, sortir de la boucle et composer le plan optimal
+            	
+                for(int i = 0; i < etatInitial.emplacementsColis.length; i++) {
+                	plan.addFirst("Deposer()");
+                }
+            	
                 do
                 {
                     plan.addFirst(e.toString());
@@ -73,16 +77,14 @@ public class AEtoile {
             {
                 Etat s = successeur.etat;
                 s.parent = e;
-
         //  ------ Calculer s.etat.g puis s.etat.f
                 s.g = e.g + successeur.cout;
                 s.h = heuristique.estimerCoutRestant(etatInitial, but);
                 s.f = s.g + s.h;
-
         //  ------ Vérifier que s.etat n'a pas d'état équivalent dans closed. (si oui, alors l'ignorer car l'heuristique admissible nous dit que s.etat aura un f supérieur ou égal)
                 if(closed.contains(s))
                 {
-                    Etat s2 = open.floor(s);
+                    Etat s2 = closed.floor(s);
                     if(s.f <= s2.f)
                     {
                         closed.remove(s2);
@@ -105,10 +107,9 @@ public class AEtoile {
                 {
                     open.add(s);
                 }
-            }
-
+            }	
         }
-		*/
+		
         return plan;
     }
 	//  Tout à la fin, n'oubliez pas de commenter les affichages de traçage
