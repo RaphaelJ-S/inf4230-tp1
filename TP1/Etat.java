@@ -79,8 +79,8 @@ public class Etat implements Comparable<Etat> {
         }
         for (Route aEffectuer : deplacementsPossibles) {
         	
-            double differenceCoordonneesX = aEffectuer.origine.positionGeographique.getX() - aEffectuer.destination.positionGeographique.getX();
-            double differenceCoordonneesY = aEffectuer.origine.positionGeographique.getY() - aEffectuer.destination.positionGeographique.getY();
+            double differenceCoordonneesX = aEffectuer.destination.positionGeographique.getX() - aEffectuer.origine.positionGeographique.getX();
+            double differenceCoordonneesY = aEffectuer.destination.positionGeographique.getY() - aEffectuer.origine.positionGeographique.getY();
             String nomDirection;
 
             if(differenceCoordonneesX == -1 && differenceCoordonneesY == 0){
