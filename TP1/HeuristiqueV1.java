@@ -6,10 +6,6 @@
  *
  */
 
-/**
- *
- */
-
 import java.util.*;
 import java.lang.Math;
 import java.awt.geom.Point2D;
@@ -40,31 +36,38 @@ public class HeuristiqueV1 extends Heuristique {
     	// -- Par exemple, pour calculer une distance, vous pouvez utiliser les positions géographiques des emplacements
     	// -- Commencez avec une version plus simple, puis raffinez vos estimations tout en veillant de ne pas surestimer le cout
 
-        ArrayList<Point2D> emplacementsRestants = new ArrayList<Point2D>();
+        ArrayList<Point2D> colisRestants = new ArrayList<Point2D>();
 
         for(int i = 0; i < etat.colisRecuperes.length ; ++i)
         {
             if(!etat.colisRecuperes[i])
             {
-                emplacementsRestants.add(etat.emplacementsColis[i].positionGeographique);
+                colisRestants.add(etat.emplacementsColis[i].positionGeographique);
             }
 
         }
 
         boolean PointDeLivraisonAjoute = false;
-        sommeDuree += (coutChargerColis * emplacementsRestants.size()) + (coutLivrerColis * emplacementsRestants.size()) + ((etat.colisRecuperes.length - emplacementsRestants.size()) * coutLivrerColis);
+        sommeDuree += (coutChargerColis * colisRestants.size()) + (coutLivrerColis * colisRestants.size()) + ((etat.colisRecuperes.length - colisRestants.size()) * coutLivrerColis);
         Point2D emplacementCourant = etat.emplacementVan.positionGeographique;
 
         // Chaque tour dans le while correspond à la visite du prochain emplacement
-        while(emplacementsRestants.size() > 0)
+        do
         {
+            // On ajoute le point de livraison une fois tous les paquets récupérés
+            if(colisRestants.size() == 0 && !PointDeLivraisonAjoute)
+            {
+                colisRestants.add(etat.ramassage.destination.positionGeographique);
+                PointDeLivraisonAjoute = true;
+            }
+
             int indexMinDistance = 0;
             double minDistance = Double.MAX_VALUE;
             Point2D emplacementSuivant = new Point2D.Float(0,0);
 
-            for(int i = 0 ; i < emplacementsRestants.size(); ++i)
+            for(int i = 0 ; i < colisRestants.size(); ++i)
             {
-                Point2D emplacement = emplacementsRestants.get(i);
+                Point2D emplacement = colisRestants.get(i);
                 double px = (emplacement.getX() - emplacementCourant.getX()) * coutDeplacementRegulier;
                 double py = (emplacement.getY() - emplacementCourant.getY()) * coutDeplacementRegulier;
                 double distance = Math.abs(px) + Math.abs(py);
@@ -77,16 +80,11 @@ public class HeuristiqueV1 extends Heuristique {
                 }
             }
             emplacementCourant = emplacementSuivant;
-            emplacementsRestants.remove(indexMinDistance);
-            // On ajoute le point de livraison une fois tous les paquets récupérés
-            if(emplacementsRestants.size() == 0 && !PointDeLivraisonAjoute)
-            {
-                emplacementsRestants.add(etat.ramassage.destination.positionGeographique);
-                PointDeLivraisonAjoute = true;
-            }
-
+            colisRestants.remove(indexMinDistance);
             sommeDuree += minDistance;
         }
+        while(!PointDeLivraisonAjoute);
+
         return sommeDuree;
     }
 
