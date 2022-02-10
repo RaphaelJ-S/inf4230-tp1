@@ -52,7 +52,7 @@ public class HeuristiqueV1 extends Heuristique {
         }
 
         boolean PointDeLivraisonAjoute = false;
-        sommeDuree += (coutChargerColis * emplacementsRestants.size()) + (coutLivrerColis * emplacementsRestants.size());
+        sommeDuree += (coutChargerColis * emplacementsRestants.size()) + (coutLivrerColis * emplacementsRestants.size()) + ((etat.colisRecuperes.length - emplacementsRestants.size()) * coutLivrerColis);
         Point2D emplacementCourant = etat.emplacementVan.positionGeographique;
 
         // Chaque tour dans le while correspond à la visite du prochain emplacement
