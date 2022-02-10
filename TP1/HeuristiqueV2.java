@@ -44,11 +44,17 @@ public class HeuristiqueV2 extends Heuristique {
             {
                 colisRestants.add(etat.emplacementsColis[i].positionGeographique);
             }
-
+            else
+            {
+                if (!etat.emplacementsColis[i].equals(etat.ramassage.destination))
+                {
+                    sommeDuree += coutLivrerColis;
+                }
+            }
         }
 
         boolean PointDeLivraisonAjoute = false;
-        sommeDuree += (coutChargerColis * colisRestants.size()) + (coutLivrerColis * colisRestants.size()) + ((etat.colisRecuperes.length - colisRestants.size()) * coutLivrerColis);
+        sommeDuree += (coutChargerColis * colisRestants.size()) + (coutLivrerColis * colisRestants.size());
         Point2D emplacementCourant = etat.emplacementVan.positionGeographique;
 
         // Chaque tour dans le while correspond à la visite du prochain emplacement
