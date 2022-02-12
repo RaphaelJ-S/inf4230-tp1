@@ -8,8 +8,8 @@
  * 
  * ---------------------------
  *   + Code permanent : JACR26038907
- *   + Nom : 
- *   + Prénom : 
+ *   + Nom : Jacob-Simard
+ *   + Prénom : Raphaël
  * ---------------------------
  *   + Code permanent : 
  *   + Nom : 
