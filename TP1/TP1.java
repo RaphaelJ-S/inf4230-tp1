@@ -11,9 +11,9 @@
  *   + Nom : Jacob-Simard
  *   + Prénom : Raphaël
  * ---------------------------
- *   + Code permanent : 
- *   + Nom : 
- *   + Prénom : 
+ *   + Code permanent : STRF06089401
+ *   + Nom : Stromei
+ *   + Prénom : Francis
  * --------------------------- 
  *   + Code permanent : 
  *   + Nom : 
