@@ -2,8 +2,22 @@
  * INF4230 - Intelligence artificielle
  * UQAM / Département d'informatique
  * 
- * Hiver 2017 / TP1
+ * Hiver 2022 / TP1
  * 
+ * Membres de l'équipe
+ * 
+ * ---------------------------
+ *   + Code permanent : JACR26038907
+ *   + Nom : 
+ *   + Prénom : 
+ * ---------------------------
+ *   + Code permanent : 
+ *   + Nom : 
+ *   + Prénom : 
+ * --------------------------- 
+ *   + Code permanent : 
+ *   + Nom : 
+ *   + Prénom : 
  */
 
 import java.io.BufferedReader;
