@@ -24,10 +24,60 @@
 
 ### Grille 01
 
-| Mesures     | Heuristique V1 | Heuristique V2 |
-| ----------- | -------------- | -------------- |
-| Coût estimé |                |                |
-| Coût réel   |                |                |
-| Coût réel   |                |                |
-| Coût réel   |                |                |
-| Coût réel   |                |                |
+| Mesures                  | Heuristique V1 | Heuristique V2 |
+| ------------------------ | -------------- | -------------- |
+| Coût estimé              |                |                |
+| Coût réel                |                |                |
+| Temps d'exécution        |                |                |
+| Nombre de noeuds générés |                |                |
+| Nombre de noeuds visités |                |                |
+
+### Grille 02
+
+| Mesures                  | Heuristique V1 | Heuristique V2 |
+| ------------------------ | -------------- | -------------- |
+| Coût estimé              |                |                |
+| Coût réel                |                |                |
+| Temps d'exécution        |                |                |
+| Nombre de noeuds générés |                |                |
+| Nombre de noeuds visités |                |                |
+
+### Grille 03
+
+| Mesures                  | Heuristique V1 | Heuristique V2 |
+| ------------------------ | -------------- | -------------- |
+| Coût estimé              |                |                |
+| Coût réel                |                |                |
+| Temps d'exécution        |                |                |
+| Nombre de noeuds générés |                |                |
+| Nombre de noeuds visités |                |                |
+
+### Grille 04
+
+| Mesures                  | Heuristique V1 | Heuristique V2 |
+| ------------------------ | -------------- | -------------- |
+| Coût estimé              |                |                |
+| Coût réel                |                |                |
+| Temps d'exécution        |                |                |
+| Nombre de noeuds générés |                |                |
+| Nombre de noeuds visités |                |                |
+
+### Grille 05
+
+| Mesures                  | Heuristique V1 | Heuristique V2 |
+| ------------------------ | -------------- | -------------- |
+| Coût estimé              |                |                |
+| Coût réel                |                |                |
+| Temps d'exécution        |                |                |
+| Nombre de noeuds générés |                |                |
+| Nombre de noeuds visités |                |                |
+
+### Grille 06
+
+| Mesures                  | Heuristique V1 | Heuristique V2 |
+| ------------------------ | -------------- | -------------- |
+| Coût estimé              |                |                |
+| Coût réel                |                |                |
+| Temps d'exécution        |                |                |
+| Nombre de noeuds générés |                |                |
+| Nombre de noeuds visités |                |                |
