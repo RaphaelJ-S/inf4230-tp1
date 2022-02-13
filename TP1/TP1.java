@@ -43,6 +43,8 @@ public class TP1 {
 		System.out.println("Remarque: le fichier doit être à la racine du projet et dois se terminer par .txt");
 		System.out.println("Exemple: ramassageH01.txt");
 
+		// ------ POUR LES COMPARAISONS
+
 		// Recuperation du fichier map et parseur du fichier
 		// try {
 		// line = keyboard.readLine();
@@ -51,6 +53,7 @@ public class TP1 {
 		// System.err.println("err");
 		// }
 		line = "ramassageH06.txt";
+		// ------ POUR LES COMPARAISONS
 		parseur.parse(line);
 
 		// Création de l'objet évaluateur d'heuristique
