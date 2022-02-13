@@ -39,12 +39,12 @@ Sud = Lieu 6-13 -> Lieu 7-13);
 Ouest = Lieu 7-13 -> Lieu 7-12); 
 Ouest = Lieu 7-12 -> Lieu 7-11); 
 Ouest = Lieu 7-11 -> Lieu 7-10); 
-Sud = Lieu 7-10 -> Lieu 8-10); 
-Ouest = Lieu 8-10 -> Lieu 8-9); 
-Sud = Lieu 8-9 -> Lieu 9-9); 
-Ouest = Lieu 9-9 -> Lieu 9-8); 
-Ouest = Lieu 9-8 -> Lieu 9-7); 
-Ouest = Lieu 9-7 -> Lieu 9-6); 
+Ouest = Lieu 7-10 -> Lieu 7-9); 
+Ouest = Lieu 7-9 -> Lieu 7-8); 
+Ouest = Lieu 7-8 -> Lieu 7-7); 
+Ouest = Lieu 7-7 -> Lieu 7-6); 
+Sud = Lieu 7-6 -> Lieu 8-6); 
+Sud = Lieu 8-6 -> Lieu 9-6); 
 Deposer(); 
 Deposer(); 
 }

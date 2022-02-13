@@ -59,7 +59,7 @@ public class AEtoile {
             // ---- Vérifier si l'état e satisfait le but.
             if (but.estStatisfait(e)) {
                 // ------ Si oui, sortir de la boucle et composer le plan optimal
-
+                System.out.println(e.f);
                 do {
                     plan.addFirst(e.toString());
                     e = e.parent;
@@ -104,6 +104,9 @@ public class AEtoile {
                 }
             }
         }
+        System.out.println("Open = " + open.size());
+        System.out.println("Closed = " + closed.size());
+        System.out.println("Add = " + (open.size() + closed.size()));
         return plan;
     }
     // Tout à la fin, n'oubliez pas de commenter les affichages de traçage

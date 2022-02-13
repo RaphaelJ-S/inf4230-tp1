@@ -44,15 +44,17 @@ public class TP1 {
 		System.out.println("Exemple: ramassageH01.txt");
 
 		// Recuperation du fichier map et parseur du fichier
-		try {
-			line = keyboard.readLine();
-		} catch (IOException e) {
-			System.err.println("err");
-		}
+		// try {
+		// line = keyboard.readLine();
+		//
+		// } catch (IOException e) {
+		// System.err.println("err");
+		// }
+		line = "ramassageH06.txt";
 		parseur.parse(line);
 
 		// Création de l'objet évaluateur d'heuristique
-		Heuristique h = new HeuristiqueV3(parseur.ramassage);
+		Heuristique h = new HeuristiqueV2(parseur.ramassage);
 		System.out.println(
 				"distance_heuristique(depart,arrivee) = " + h.estimerCoutRestant(parseur.etatInitial, parseur.but));
 
