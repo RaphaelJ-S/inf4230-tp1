@@ -2,23 +2,17 @@
 
 ## Identification des membres de l'équipe
 
-1. Raphaël Jacob-Simard
+1.  - Code permanent : JACR26038907
+    - Nom : Jacob-Simard
+    - Prénom : Raphaël
 
-   - Code permanent : JACR26038907
-   - Nom : Jacob-Simard
-   - Prénom : Raphaël
+2.  - Code permanent : STRF06089401
+    - Nom : Stromei
+    - Prénom : Francis
 
-2. Nom 2
-
-   - Code permanent : STRF06089401
-   - Nom : Stromei
-   - Prénom : Francis
-
-3. Nom 3
-
-   - Code permanent : GAUA83030100
-   - Nom : Gauquier
-   - Prénom : Antoine
+3.  - Code permanent : GAUA83030100
+    - Nom : Gauquier
+    - Prénom : Antoine
 
 ## Rapport de comparaison des heuristiques
 

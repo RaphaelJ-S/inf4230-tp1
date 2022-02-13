@@ -15,9 +15,9 @@
  *   + Nom : Stromei
  *   + Prénom : Francis
  * --------------------------- 
- *   + Code permanent : 
- *   + Nom : 
- *   + Prénom : 
+ *   + Code permanent : GAUA83030100
+ *   + Nom : Gauquier
+ *   + Prénom : Antoine
  */
 
 import java.io.BufferedReader;
