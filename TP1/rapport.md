@@ -16,9 +16,9 @@
 
 3. Nom 3
 
-   - Code permanent :
-   - Nom :
-   - Prénom :
+   - Code permanent : GAUA83030100
+   - Nom : Gauquier
+   - Prénom : Antoine
 
 ## Rapport de comparaison des heuristiques
 
