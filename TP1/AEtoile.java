@@ -57,7 +57,7 @@ public class AEtoile {
             // ---- Sortir d'open l'état e avec e.f minimal.
             open.remove(e);
             // ---- Vérifier si l'état e satisfait le but.
-            if (but.estStatisfait(e)) {
+            if (but.estSatisfait(e)) {
                 // ------ Si oui, sortir de la boucle et composer le plan optimal
 
                 do {

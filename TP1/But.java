@@ -19,7 +19,7 @@ public class But {
      * paramètre.
      * Le but ici est : tous les Colis ont été amenés à l'Arrivee
      */
-    public boolean estStatisfait(final Etat etat) {
+    public boolean estSatisfait(final Etat etat) {
 
         for (int i = 0; i < destinationsPatients.length; i++) {
 
