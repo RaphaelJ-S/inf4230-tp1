@@ -7,7 +7,6 @@
  */
 
 import java.util.*;
-import java.awt.geom.Point2D;
 
 public class Etat implements Comparable<Etat> {
 
@@ -178,14 +177,7 @@ public class Etat implements Comparable<Etat> {
 
     @Override
     public String toString() {
-        // String s = "ETAT: f=" + f + " g=" + g + "\n";
-        // s += " Pos=" + emplacementVan.nom + "";
-        // for (int i = 0; i < emplacementsColis.length; i++) {
-        // s += "\n PosColis[i]=";
-        // s += emplacementsColis[i] == null ? "--" : emplacementsColis[i].nom;
-        // }
-        // s += "\n";
-        // return s;
+
         return this.actionFromParent;
     }
 

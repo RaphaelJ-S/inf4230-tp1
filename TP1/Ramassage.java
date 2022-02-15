@@ -12,7 +12,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
-
 /**
  * Contient des données statiques sur le monde.
  *
@@ -23,22 +22,13 @@ import java.util.Vector;
  * @author Mickael Wajnberg
  */
 public class Ramassage {
-    public Map<String, Emplacement>  emplacements = new TreeMap<String, Emplacement>();
+    public Map<String, Emplacement> emplacements = new TreeMap<String, Emplacement>();
     public Emplacement destination;
-    
+
     /** Durée du chargement en unités de temps */
-    public double  dureeChargement = 30;
-    
+    public double dureeChargement = 30;
+
     /** Durée du déchargement en unités de temps */
-    public double  dureeDechargement = 30;
-
-
-    
-   
-
-
-
-  
-
+    public double dureeDechargement = 30;
 
 }

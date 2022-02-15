@@ -60,10 +60,6 @@ public class AEtoile {
             if (but.estStatisfait(e)) {
                 // ------ Si oui, sortir de la boucle et composer le plan optimal
 
-                // ------ POUR LES COMPARAISONS
-                System.out.println(e.f);
-                // ------ POUR LES COMPARAISONS
-
                 do {
                     plan.addFirst(e.toString());
                     e = e.parent;
@@ -108,12 +104,6 @@ public class AEtoile {
                 }
             }
         }
-
-        // ------ POUR LES COMPARAISONS
-        System.out.println("Open = " + open.size());
-        System.out.println("Closed = " + closed.size());
-        System.out.println("Add = " + (open.size() + closed.size()));
-        // ------ POUR LES COMPARAISONS
 
         return plan;
     }

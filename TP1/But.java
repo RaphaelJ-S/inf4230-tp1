@@ -22,8 +22,7 @@ public class But {
     public boolean estStatisfait(final Etat etat) {
 
         for (int i = 0; i < destinationsPatients.length; i++) {
-            // System.out.println(etat.emplacementsColis[i].positionGeographique);
-            // System.out.println("--");
+
             if (etat.emplacementsColis[i] != destinationsPatients[i])
                 return false;
         }

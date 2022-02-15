@@ -12,19 +12,18 @@ import java.util.ArrayList;
 /* Un emplacement représente un endroit sur la carte dans la planete. */
 public class Emplacement implements Comparable<Emplacement> {
 
-    protected  Point2D positionGeographique;
-    protected  String  nom;
-    protected  String  type;
+    protected Point2D positionGeographique;
+    protected String nom;
+    protected String type;
 
     /* Routes attachées à cet emplacement. */
-    protected  ArrayList<Route>  routes;
-    
+    protected ArrayList<Route> routes;
+
     /* Pour numérotation interne. */
-    protected int        id;
+    protected int id;
     protected static int nextId = 0;
-	
-	
-    public Emplacement(final String nom, final double x, final double y, final String type){
+
+    public Emplacement(final String nom, final double x, final double y, final String type) {
         this.nom = nom;
         this.type = type;
         this.positionGeographique = new Point2D.Double(x, y);
@@ -38,9 +37,8 @@ public class Emplacement implements Comparable<Emplacement> {
     }
 
     @Override
-    public String toString(){
-        //return nom //Ligne originale
-        return "("+id+"(" + nom + ", " + type + ", " + positionGeographique.toString() + ")";
+    public String toString() {
+        return nom;
     }
 
 }
