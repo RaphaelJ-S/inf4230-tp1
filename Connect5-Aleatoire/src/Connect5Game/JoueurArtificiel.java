@@ -20,8 +20,8 @@ public class JoueurArtificiel implements Joueur {
 
         // Dépendant du délais, on pourrait décider d'effectuer un algorithme différent.
         // par exemple, on pourrait limiter la profondeur de la recherche.
-        // EvaluationChoix eval = new AleatoireImpl();
-        EvaluationChoix eval = new AlphaBetaImpl();
+        EvaluationChoix eval = new AleatoireImpl();
+        // EvaluationChoix eval = new AlphaBetaImpl();
 
         return eval.evaluer(grille, delais);
     }

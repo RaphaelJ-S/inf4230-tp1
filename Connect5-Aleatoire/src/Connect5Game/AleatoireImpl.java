@@ -5,6 +5,13 @@ import java.util.Random;
 
 public class AleatoireImpl implements EvaluationChoix {
 
+    /**
+     * Retourne une position libre aléatoire
+     * 
+     * @param grille L'état présent à évaluer.
+     * @param delais Le délais pour prendre une décision.
+     * @return Une position aléatoire.
+     */
     @Override
     public Position evaluer(Grille grille, int delais) {
         Random random = new Random();
