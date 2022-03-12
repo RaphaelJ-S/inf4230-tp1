@@ -32,7 +32,9 @@ public class AlphaBetaImpl implements EvaluationChoix {
             return calculerUtilite(grille);
         int utilite = Integer.MIN_VALUE;
         for (Entry<Integer, Position> entry : enumererSuccesseurs(grille).entrySet()) {
-            utilite = Math.max(utilite, min(grille, alpha, beta));
+            Grille prochain = grille.clone();
+            prochain.set(entry.getValue(), 1);
+            utilite = Math.max(utilite, min(prochain, alpha, beta));
             if (utilite >= beta)
                 return utilite;
             alpha = Math.max(alpha, utilite);
@@ -44,15 +46,16 @@ public class AlphaBetaImpl implements EvaluationChoix {
     private int min(Grille grille, int alpha, int beta) {
         if (testerEtatFinal(grille))
             return calculerUtilite(grille);
-        int utilite = Integer.MIN_VALUE;
+        int utilite = Integer.MAX_VALUE;
         for (Entry<Integer, Position> entry : enumererSuccesseurs(grille).entrySet()) {
-            utilite = Math.max(utilite, min(grille, alpha, beta));
-            if (utilite >= beta)
+            Grille prochain = grille.clone();
+            prochain.set(entry.getValue(), 1);
+            utilite = Math.min(utilite, max(prochain, alpha, beta));
+            if (utilite <= alpha)
                 return utilite;
-            alpha = Math.max(alpha, utilite);
+            beta = Math.min(beta, utilite);
         }
         return utilite;
-        return 0;
     }
 
     // Evaluation de l'arret de la recherche - pourrait être plein de choses.
