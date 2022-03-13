@@ -14,7 +14,7 @@ public class AlphaBetaImpl implements EvaluationChoix {
      * Retourne une position représentant un coup dans une partie de Connec5.
      * 
      * @param grille L'état présent à évaluer.
-     * @param delais Le délais à respecter pour la prise de décision.
+     * @param delais Le délais à respecter pour la prise de décision en ms.
      * @return La décision à prendre.
      */
     @Override
@@ -28,8 +28,10 @@ public class AlphaBetaImpl implements EvaluationChoix {
 
     // calcule l'utilité du MAX de l'état dans alpha-beta
     private int max(Grille grille, int alpha, int beta) {
+        Utilite fonction = new TousJoueursImpl();
+
         if (testerEtatFinal(grille))
-            return calculerUtilite(grille);
+            return fonction.evaluerUtilite(grille);
         int utilite = Integer.MIN_VALUE;
         for (Entry<Integer, Position> entry : enumererSuccesseurs(grille).entrySet()) {
             Grille prochain = grille.clone();
@@ -44,8 +46,9 @@ public class AlphaBetaImpl implements EvaluationChoix {
 
     // calcule l'utilité du MIN de l'état dans alpha-beta
     private int min(Grille grille, int alpha, int beta) {
+        Utilite fonction = new TousJoueursImpl();
         if (testerEtatFinal(grille))
-            return calculerUtilite(grille);
+            return fonction.evaluerUtilite(grille);
         int utilite = Integer.MAX_VALUE;
         for (Entry<Integer, Position> entry : enumererSuccesseurs(grille).entrySet()) {
             Grille prochain = grille.clone();
@@ -70,12 +73,6 @@ public class AlphaBetaImpl implements EvaluationChoix {
     private TreeMap<Integer, Position> enumererSuccesseurs(Grille grille) {
 
         return new TreeMap<>();
-    }
-
-    // Il me semble aussi que cette fonction devrait être quelque part d'autre.
-    private int calculerUtilite(Grille grille) {
-
-        return 0;
     }
 
 }
