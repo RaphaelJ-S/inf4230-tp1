@@ -53,9 +53,11 @@ public class TousJoueursImpl implements Utilite {
     // possibles
     // diagonales, verticales et horizontales.
     private int utilitePosition(Grille grille, Position aEvaluer, int joueur) {
-        int utilite = calculerDiagonaleGD(grille, aEvaluer, joueur);
+        return calculerDiagonaleGD(grille, aEvaluer, joueur) +
+                calculerDiagonaleDG(grille, aEvaluer, joueur) +
+                calculerHorizontale(grille, aEvaluer, joueur) +
+                calculerVerticale(grille, aEvaluer, joueur);
 
-        return utilite;
     }
 
     // calcul diagonale haut gauche vers bas droit
@@ -64,34 +66,66 @@ public class TousJoueursImpl implements Utilite {
         int limInf = grille.getData().length - 1;
         int limGauche = 0;
         int limDroite = grille.getData()[0].length - 1;
-        int debut = Math.min(
-                aEvaluer.ligne - 4 <= limSup ? 0 : aEvaluer.ligne - 4,
-                aEvaluer.colonne - 4 <= limGauche ? 0 : aEvaluer.colonne - 4);
-        Position curr = new Position(aEvaluer.ligne - debut, aEvaluer.colonne - debut);
-        int fin = Math.min(
-                aEvaluer.ligne + 4 >= limInf ? limInf : aEvaluer.ligne + 4,
-                aEvaluer.colonne + 4 >= limDroite ? limDroite : aEvaluer.colonne + 4);
-        boolean continuer = true;
+        int x = aEvaluer.ligne;
+        int y = aEvaluer.colonne;
         int utilite = 0;
-        while (curr.ligne < Math.min(aEvaluer.ligne + 1, fin) && continuer) {
+
+        // Trouver le début à vérifier
+        while (x > limSup && y > limGauche && x > aEvaluer.ligne - 4 && y > aEvaluer.colonne - 4) {
+            x--;
+            y--;
+        }
+        Position curr = new Position(x, y);
+        // Trouver la fin à vérifier
+        while (x < limInf && y < limDroite && x < aEvaluer.ligne + 4 && y < aEvaluer.colonne + 4) {
+            x++;
+            y++;
+        }
+        while (curr.ligne <= aEvaluer.ligne && curr.colonne <= aEvaluer.colonne) {
             for (int i = 0; i < 5; i++) {
-                if (curr.ligne + i > fin || curr.colonne + i > fin) {
-                    continuer = false;
+                int iter_x = curr.ligne + i;
+                int iter_y = curr.colonne + i;
+                if (iter_x > x || iter_y > y) {
                     break;
                 }
-                if (grille.getData()[i][i] != joueur || grille.getData()[i][i] != 0) {
-                    continuer = false;
+                if (grille.getData()[iter_x][iter_y] != joueur && grille.getData()[iter_x][iter_y] != 0) {
+                    curr.ligne = iter_x;
+                    curr.colonne = iter_y;
                     break;
                 }
 
-                if (i == 4 && (grille.getData()[i][i] == 0 || grille.getData()[i][i] == joueur)) {
+                if ((i == 4) && (grille.getData()[iter_x][iter_y] == 0 || grille.getData()[iter_x][iter_y] == joueur)) {
                     utilite += 1;
                 }
 
             }
+            curr.ligne += 1;
+            curr.colonne += 1;
+            if (x - curr.ligne < 4 || y - curr.colonne < 4)
+                break;
         }
 
         return utilite;
     }
 
+    // calcul diagonale haut doit vers bas gauche
+    private int calculerDiagonaleDG(Grille grille, Position aEvaluer, int joueur) {
+        int utilite = 0;
+
+        return utilite;
+    }
+
+    // calcul diagonale haut doit vers bas gauche
+    private int calculerHorizontale(Grille grille, Position aEvaluer, int joueur) {
+        int utilite = 0;
+
+        return utilite;
+    }
+
+    // calcul diagonale haut doit vers bas gauche
+    private int calculerVerticale(Grille grille, Position aEvaluer, int joueur) {
+        int utilite = 0;
+
+        return utilite;
+    }
 }
