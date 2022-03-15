@@ -11,7 +11,6 @@ import java.util.LinkedList;
  *
  */
 public class Grille {
-
     public Grille(int nblignes, int nbcols){
         data = new byte[nblignes][nbcols];
         
@@ -89,11 +88,21 @@ public class Grille {
         Grille copie = new Grille(data.length, data[0].length);
         for(int l=0;l<data.length;l++)
             System.arraycopy(data[l], 0, copie.data[l], 0, data[l].length);
+        copie.setJoueurCourant(joueurCourant);
         return copie;
     }
     
+    public void setJoueurCourant (int joueur)
+    {
+        joueurCourant = joueur;
+    }
+
+    public int getJoeurCourant ()
+    {
+        return joueurCourant;
+    }
+
     protected byte[][]     data;
-    
     protected LinkedList<Position> positionsToHighlight = new LinkedList<Position>();
-    
+    private int joueurCourant = 1;
 }

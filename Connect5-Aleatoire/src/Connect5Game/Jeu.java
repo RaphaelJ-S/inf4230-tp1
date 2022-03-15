@@ -94,6 +94,7 @@ public class Jeu implements Runnable {
             if(grilleObserver!=null) grilleObserver.grilleChanged(grille);
             gagnant = verif.determineGagnant(grille);
             nextjoueur=(nextjoueur+1)%joueurs.length;
+            grille.setJoueurCourant(nextjoueur+1);
             try{
                 Thread.sleep(20);
             }catch(InterruptedException ie){ie.printStackTrace();}
