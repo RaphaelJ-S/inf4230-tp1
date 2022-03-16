@@ -32,16 +32,16 @@ public class TousJoueursImpl implements Utilite {
         int utilite = 0;
         HashMap<Integer, ArrayList<Position>> cases = trouverCasesSelectionnees(grille);
 
-        ArrayList<Position> j1 = cases.get(1);
-        ArrayList<Position> j2 = cases.get(2);
+        ArrayList<Position> courant = cases.get(joueurCourant);
+        ArrayList<Position> enemy = cases.get(adversaire);
 
-        if (j1 != null) {
-            for (Position evalPositif : j1) {
+        if (courant != null) {
+            for (Position evalPositif : courant) {
                 utilite += evaluerPosition(grille, evalPositif, joueurCourant);
             }
         }
-        if (j2 != null) {
-            for (Position evalNegatif : j2) {
+        if (enemy != null) {
+            for (Position evalNegatif : enemy) {
                 utilite -= evaluerPosition(grille, evalNegatif, adversaire);
             }
         }
@@ -49,7 +49,7 @@ public class TousJoueursImpl implements Utilite {
     }
 
     // Identifie les cases sélectionnées et les retournent dans une hashmap où la
-    // clé est le nombre du joueurCourant avec ses coups associés.
+    // clé est le nombre du joueur avec ses coups associés.
     private HashMap<Integer, ArrayList<Position>> trouverCasesSelectionnees(Grille grille) {
         HashMap<Integer, ArrayList<Position>> cases = new HashMap<>();
 
@@ -135,9 +135,11 @@ public class TousJoueursImpl implements Utilite {
         int limBas = grille.getData().length - 1;
         int limGauche = 0;
         int limDroite = grille.getData()[0].length - 1;
+        System.out.println("ligne : " + aEvaluer.ligne);
+        System.out.println("colonne : " + aEvaluer.colonne);
 
-        return aEvaluer.ligne >= limGauche && aEvaluer.ligne < limDroite && aEvaluer.colonne >= limHaut
-                && aEvaluer.colonne < limBas && (grille.get(aEvaluer) == 0 || grille.get(aEvaluer) == joueurCourant);
+        return aEvaluer.colonne >= limGauche && aEvaluer.colonne < limDroite && aEvaluer.ligne >= limHaut
+                && aEvaluer.ligne < limBas && (grille.get(aEvaluer) == 0 || grille.get(aEvaluer) == joueurCourant);
     }
 
 }
