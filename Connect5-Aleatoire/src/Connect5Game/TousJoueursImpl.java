@@ -78,8 +78,8 @@ public class TousJoueursImpl implements Utilite {
         int utilite = 0;
 
         for (Directions direction : Directions.values()) {
-            int x = aEvaluer.ligne;
-            int y = aEvaluer.colonne;
+            int x = aEvaluer.colonne;
+            int y = aEvaluer.ligne;
             int distance = 0;
             int nbJetonsDirection = 0;
             boolean caseValide = false;
@@ -89,31 +89,31 @@ public class TousJoueursImpl implements Utilite {
                     // On commence par ajuster notre curseur sur la prochaine case à valider
                     case hautGauche:
                         --x;
-                        ++y;
+                        --y;
                         break;
                     case haut:
-                        ++y;
+                        --y;
                         break;
                     case hautDroite:
                         ++x;
-                        ++y;
+                        --y;
                         break;
                     case basGauche:
                         --x;
-                        --y;
+                        ++y;
                         break;
                     case bas:
-                        --y;
+                        ++y;
                         break;
                     case basDroite:
                         ++x;
-                        --y;
+                        ++y;
                         break;
                     default:
                         break;
                 }
                 ++distance;
-                Position positionAValider = new Position(x, y);
+                Position positionAValider = new Position(y, x);
                 caseValide = validerCase(grille, positionAValider, joueurCourant);
 
                 if (caseValide) {
