@@ -15,7 +15,6 @@ public class AleatoireImpl implements EvaluationChoix {
     @Override
     public Position evaluer(Grille grille, int delais) {
         Random random = new Random();
-        afficherGrille(grille);
         ArrayList<Integer> casesvides = new ArrayList<Integer>();
         int nbcol = grille.getData()[0].length;
         for (int l = 0; l < grille.getData().length; l++)
@@ -25,21 +24,6 @@ public class AleatoireImpl implements EvaluationChoix {
         int choix = random.nextInt(casesvides.size());
         choix = casesvides.get(choix);
         return new Position(choix / nbcol, choix % nbcol);
-    }
-
-    // fonction pour afficher la grille puisque toString the Grille ne fonctionne
-    // pas
-    // 1 sont les coups du joueur 1
-    // 2 sont les coups du joueur 2
-    // 0 sont les cases vides et valides
-    // tous les autres chiffres sont les cases invalides
-    private void afficherGrille(Grille grille) {
-        for (byte[] tab1 : grille.data) {
-            for (byte elem : tab1) {
-                System.out.print(elem + " ");
-            }
-            System.out.println();
-        }
     }
 
 }

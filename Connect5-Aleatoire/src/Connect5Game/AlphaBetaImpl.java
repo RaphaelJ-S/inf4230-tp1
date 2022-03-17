@@ -3,16 +3,16 @@ package Connect5Game;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Algorithme de recherche Alpha-Beta pour le choix d'un prochain coup pour un
  * jeu de Connect5.
  */
 public class AlphaBetaImpl implements EvaluationChoix {
-
-    private HashMap<Position, Integer> successeurs = new HashMap<>();
 
     /**
      * Retourne une position représentant un coup dans une partie de Connect5.
@@ -23,33 +23,30 @@ public class AlphaBetaImpl implements EvaluationChoix {
      */
     @Override
     public Position evaluer(Grille grille, int delais) {
-        for (Position libre : grille.getPositionLibres()) {
-            successeurs.put(libre, Integer.MIN_VALUE);
+        Utilite fonction = new TousJoueursImpl();
+        Position choix = null;
+        int utilite = Integer.MIN_VALUE;
+        for (Entry<Grille, Position> libres : enumererSuccesseurs(grille, grille.getJoeurCourant(), fonction)
+                .entrySet()) {
+            int nv_utilite = max(libres.getKey(), Integer.MIN_VALUE, Integer.MAX_VALUE, fonction);
+            choix = nv_utilite >= utilite ? libres.getValue() : choix;
+            utilite = nv_utilite;
         }
-        System.out.println(successeurs);
-        int utilite = max(grille, Integer.MIN_VALUE, Integer.MAX_VALUE, null);
-        for (Entry<Position, Integer> entry : successeurs.entrySet()) {
-            if (entry.getValue() == utilite)
-                return entry.getKey();
 
-        }
-        return null;
+        return choix;
     }
 
     // calcule l'utilité du MAX de l'état dans alpha-beta
-    private int max(Grille grille, int alpha, int beta, Position premiere) {
-        Utilite fonction = new TousJoueursImpl();
+    private int max(Grille grille, int alpha, int beta, Utilite fonction) {
         int joueur = grille.getJoeurCourant();
         int utilite = Integer.MIN_VALUE;
         if (testerEtatFinal(grille)) {
-            utilite = fonction.evaluerUtilite(grille);
-            successeurs.put(premiere, utilite);
-            return utilite;
+            return fonction.evaluerUtilite(grille);
         }
 
-        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, fonction, null).entrySet()) {
+        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, fonction).entrySet()) {
 
-            utilite = Math.max(utilite, min(entry.getKey(), alpha, beta, entry.getValue()));
+            utilite = Math.max(utilite, min(entry.getKey(), alpha, beta, fonction));
             if (utilite >= beta)
                 return utilite;
             alpha = Math.max(alpha, utilite);
@@ -58,19 +55,17 @@ public class AlphaBetaImpl implements EvaluationChoix {
     }
 
     // calcule l'utilité du MIN de l'état dans alpha-beta
-    private int min(Grille grille, int alpha, int beta, Position premiere) {
-        Utilite fonction = new TousJoueursImpl();
+    private int min(Grille grille, int alpha, int beta, Utilite fonction) {
         int joueur = grille.getJoeurCourant() == 1 ? 2 : 1;
         int utilite = Integer.MAX_VALUE;
 
         if (testerEtatFinal(grille)) {
-            utilite = fonction.evaluerUtilite(grille);
-            successeurs.put(premiere, utilite);
-            return utilite;
-        }
-        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, fonction, premiere).entrySet()) {
 
-            utilite = Math.min(utilite, max(entry.getKey(), alpha, beta, entry.getValue()));
+            return fonction.evaluerUtilite(grille);
+        }
+        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, fonction).entrySet()) {
+
+            utilite = Math.min(utilite, max(entry.getKey(), alpha, beta, fonction));
             if (utilite <= alpha)
                 return utilite;
             beta = Math.min(beta, utilite);
@@ -86,8 +81,7 @@ public class AlphaBetaImpl implements EvaluationChoix {
 
     // Retourne les coups possibles associés à la valeurs d'utilité résultante de la
     // grille après ce coup.
-    private TreeMap<Grille, Position> enumererSuccesseurs(Grille grille, int joueur, Utilite fonction,
-            Position originale) {
+    private TreeMap<Grille, Position> enumererSuccesseurs(Grille grille, int joueur, Utilite fonction) {
         // Classe les grille en fonction de leurs utilité en ordre décroissant.
         TreeMap<Grille, Position> branchements = new TreeMap<>(new Comparator<Grille>() {
             @Override
@@ -99,11 +93,10 @@ public class AlphaBetaImpl implements EvaluationChoix {
         for (Position libre : grille.getPositionLibres()) {
             Grille prochain = grille.clone();
             prochain.set(libre, joueur);
-            if (originale == null) {
-                originale = libre;
-            }
-            branchements.put(prochain, originale);
+
+            branchements.put(prochain, libre);
         }
+
         return branchements;
     }
 

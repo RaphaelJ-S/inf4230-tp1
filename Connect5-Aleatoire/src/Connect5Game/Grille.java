@@ -80,14 +80,21 @@ public class Grille {
 
     @Override
     public String toString() {
-        char[] table = { '0', 'N', 'B' };
-        String result = "" + data.length + " " + data[0].length + "\n";
-        for (byte[] b : data) {
-            char[] c = new char[b.length];
-            for (int i = 0; i < b.length; i++)
-                c[i] = table[b[i]];
-            result += new String(c);
-            result += '\n';
+        // char[] table = { '0', 'N', 'B' };
+        // String result = "" + data.length + " " + data[0].length + "\n";
+        // for (byte[] b : data) {
+        // char[] c = new char[b.length];
+        // for (int i = 0; i < b.length; i++)
+        // c[i] = table[b[i]];
+        // result += new String(c);
+        // result += '\n';
+        // }
+        String result = "";
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[i].length; j++) {
+                result += data[i][j] + " ";
+            }
+            result += "\n";
         }
         return result;
     }
