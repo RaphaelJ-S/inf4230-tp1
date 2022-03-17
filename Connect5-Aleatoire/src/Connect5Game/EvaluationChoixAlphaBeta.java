@@ -2,7 +2,9 @@ package Connect5Game;
 
 import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.PriorityQueue;
 
 /**
  * Algorithme de recherche Alpha-Beta pour le choix d'un prochain coup pour un
@@ -21,11 +23,10 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
     public Position evaluer(Grille grille, int delais, ParametreRecherche param) {
         Position choix = null;
         int utilite = Integer.MIN_VALUE;
-        for (Entry<Grille, Position> libres : enumererSuccesseurs(grille, grille.getJoeurCourant(), param.getFonction())
-                .entrySet()) {
-            int nv_utilite = max(libres.getKey(), Integer.MIN_VALUE, Integer.MAX_VALUE, param);
-            System.out.println(nv_utilite);
-            choix = nv_utilite >= utilite ? libres.getValue() : choix;
+        for (Paire libres : enumererSuccesseurs(grille, grille.getJoeurCourant(), param.getFonction())) {
+
+            int nv_utilite = max(libres.grille, Integer.MIN_VALUE, Integer.MAX_VALUE, param);
+            choix = nv_utilite >= utilite ? libres.pos : choix;
             utilite = nv_utilite;
         }
 
@@ -40,9 +41,9 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
             return param.calculerUtilite(grille);
         }
 
-        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, param.getFonction()).entrySet()) {
+        for (Paire entry : enumererSuccesseurs(grille, joueur, param.getFonction())) {
 
-            utilite = Math.max(utilite, min(entry.getKey(), alpha, beta, param));
+            utilite = Math.max(utilite, min(entry.grille, alpha, beta, param));
             if (utilite >= beta)
                 return utilite;
             alpha = Math.max(alpha, utilite);
@@ -60,9 +61,9 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
             return param.calculerUtilite(grille);
         }
 
-        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, param.getFonction()).entrySet()) {
+        for (Paire entry : enumererSuccesseurs(grille, joueur, param.getFonction())) {
 
-            utilite = Math.min(utilite, max(entry.getKey(), alpha, beta, param));
+            utilite = Math.min(utilite, max(entry.grille, alpha, beta, param));
             if (utilite <= alpha)
                 return utilite;
             beta = Math.min(beta, utilite);
@@ -72,32 +73,30 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
 
     // Retourne les coups possibles associés à la valeurs d'utilité résultante de la
     // grille après ce coup.
-    private TreeMap<Grille, Position> enumererSuccesseurs(Grille grille, int joueur, Utilite fonction) {
+    private ArrayList<Paire> enumererSuccesseurs(Grille grille, int joueur, Utilite fonction) {
         // Classe les grille en fonction de leurs utilité en ordre décroissant.
-        TreeMap<Grille, Position> branchements = new TreeMap<>(new Comparator<Grille>() {
-            @Override
-            public int compare(Grille g1, Grille g2) {
-                return fonction.evaluerUtilite(g2) - fonction.evaluerUtilite(g1);
-            }
-        });
-        System.out.println(grille);
-        System.out.println(joueur);
-        System.out.println(grille.getPositionLibres());
-        System.out.println();
+        ArrayList<Paire> branchements = new ArrayList<>();
 
         for (Position libre : grille.getPositionLibres()) {
 
             Grille prochain = grille.clone();
             prochain.set(libre, joueur);
-
-            branchements.put(prochain, libre);
+            branchements.add(new Paire(prochain, libre));
         }
-        // for (Entry<Grille, Position> entry : branchements.entrySet()) {
-        // System.out.println(entry.getValue());
-        // }
-        // System.out.println();
 
         return branchements;
+    }
+
+    // Classe wrapper pour retourner deux valeurs.
+    private class Paire {
+        public Grille grille;
+        public Position pos;
+
+        public Paire(Grille grille, Position pos) {
+            this.grille = grille;
+            this.pos = pos;
+        }
+
     }
 
 }
