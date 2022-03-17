@@ -135,8 +135,6 @@ public class TousJoueursImpl implements Utilite {
         int limBas = grille.getData().length - 1;
         int limGauche = 0;
         int limDroite = grille.getData()[0].length - 1;
-        System.out.println("ligne : " + aEvaluer.ligne);
-        System.out.println("colonne : " + aEvaluer.colonne);
 
         return aEvaluer.colonne >= limGauche && aEvaluer.colonne < limDroite && aEvaluer.ligne >= limHaut
                 && aEvaluer.ligne < limBas && (grille.get(aEvaluer) == 0 || grille.get(aEvaluer) == joueurCourant);

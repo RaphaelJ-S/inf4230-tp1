@@ -26,6 +26,7 @@ public class AlphaBetaImpl implements EvaluationChoix {
         for (Position libre : grille.getPositionLibres()) {
             successeurs.put(libre, Integer.MIN_VALUE);
         }
+        System.out.println(successeurs);
         int utilite = max(grille, Integer.MIN_VALUE, Integer.MAX_VALUE, null);
         for (Entry<Position, Integer> entry : successeurs.entrySet()) {
             if (entry.getValue() == utilite)
