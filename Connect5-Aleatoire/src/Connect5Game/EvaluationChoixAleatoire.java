@@ -3,17 +3,18 @@ package Connect5Game;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AleatoireImpl implements EvaluationChoix {
+public class EvaluationChoixAleatoire implements EvaluationChoix {
 
     /**
      * Retourne une position libre aléatoire
      * 
      * @param grille L'état présent à évaluer.
      * @param delais Le délais pour prendre une décision.
+     * @param param  Les paramètres de recherches.
      * @return Une position aléatoire.
      */
     @Override
-    public Position evaluer(Grille grille, int delais) {
+    public Position evaluer(Grille grille, int delais, ParametreRecherche param) {
         Random random = new Random();
         ArrayList<Integer> casesvides = new ArrayList<Integer>();
         int nbcol = grille.getData()[0].length;

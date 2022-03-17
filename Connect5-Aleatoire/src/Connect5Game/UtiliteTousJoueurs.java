@@ -3,7 +3,7 @@ package Connect5Game;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TousJoueursImpl implements Utilite {
+public class UtiliteTousJoueurs implements Utilite {
 
     enum Directions {
         hautGauche,

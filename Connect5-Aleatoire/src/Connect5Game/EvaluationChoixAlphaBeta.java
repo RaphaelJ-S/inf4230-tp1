@@ -1,18 +1,14 @@
 package Connect5Game;
 
-import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.Map.Entry;
-import java.util.concurrent.TimeUnit;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Random;
 
 /**
  * Algorithme de recherche Alpha-Beta pour le choix d'un prochain coup pour un
  * jeu de Connect5.
  */
-public class AlphaBetaImpl implements EvaluationChoix {
+public class EvaluationChoixAlphaBeta implements EvaluationChoix {
 
     /**
      * Retourne une position représentant un coup dans une partie de Connect5.
@@ -22,13 +18,13 @@ public class AlphaBetaImpl implements EvaluationChoix {
      * @return La décision à prendre.
      */
     @Override
-    public Position evaluer(Grille grille, int delais) {
-        Utilite fonction = new TousJoueursImpl();
+    public Position evaluer(Grille grille, int delais, ParametreRecherche param) {
         Position choix = null;
         int utilite = Integer.MIN_VALUE;
-        for (Entry<Grille, Position> libres : enumererSuccesseurs(grille, grille.getJoeurCourant(), fonction)
+        for (Entry<Grille, Position> libres : enumererSuccesseurs(grille, grille.getJoeurCourant(), param.getFonction())
                 .entrySet()) {
-            int nv_utilite = max(libres.getKey(), Integer.MIN_VALUE, Integer.MAX_VALUE, fonction);
+            int nv_utilite = max(libres.getKey(), Integer.MIN_VALUE, Integer.MAX_VALUE, param);
+            System.out.println(nv_utilite);
             choix = nv_utilite >= utilite ? libres.getValue() : choix;
             utilite = nv_utilite;
         }
@@ -37,16 +33,16 @@ public class AlphaBetaImpl implements EvaluationChoix {
     }
 
     // calcule l'utilité du MAX de l'état dans alpha-beta
-    private int max(Grille grille, int alpha, int beta, Utilite fonction) {
+    private int max(Grille grille, int alpha, int beta, ParametreRecherche param) {
         int joueur = grille.getJoeurCourant();
         int utilite = Integer.MIN_VALUE;
-        if (testerEtatFinal(grille)) {
-            return fonction.evaluerUtilite(grille);
+        if (param.verifierCondition(grille)) {
+            return param.calculerUtilite(grille);
         }
 
-        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, fonction).entrySet()) {
+        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, param.getFonction()).entrySet()) {
 
-            utilite = Math.max(utilite, min(entry.getKey(), alpha, beta, fonction));
+            utilite = Math.max(utilite, min(entry.getKey(), alpha, beta, param));
             if (utilite >= beta)
                 return utilite;
             alpha = Math.max(alpha, utilite);
@@ -55,28 +51,23 @@ public class AlphaBetaImpl implements EvaluationChoix {
     }
 
     // calcule l'utilité du MIN de l'état dans alpha-beta
-    private int min(Grille grille, int alpha, int beta, Utilite fonction) {
+    private int min(Grille grille, int alpha, int beta, ParametreRecherche param) {
         int joueur = grille.getJoeurCourant() == 1 ? 2 : 1;
         int utilite = Integer.MAX_VALUE;
 
-        if (testerEtatFinal(grille)) {
+        if (param.verifierCondition(grille)) {
 
-            return fonction.evaluerUtilite(grille);
+            return param.calculerUtilite(grille);
         }
-        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, fonction).entrySet()) {
 
-            utilite = Math.min(utilite, max(entry.getKey(), alpha, beta, fonction));
+        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, param.getFonction()).entrySet()) {
+
+            utilite = Math.min(utilite, max(entry.getKey(), alpha, beta, param));
             if (utilite <= alpha)
                 return utilite;
             beta = Math.min(beta, utilite);
         }
         return utilite;
-    }
-
-    // Evaluation de l'arret de la recherche - pourrait être plein de choses.
-    // dernier état, profondeur atteinte, utilité trop petite, etc
-    private boolean testerEtatFinal(Grille grille) {
-        return grille.nbLibre() == 0;
     }
 
     // Retourne les coups possibles associés à la valeurs d'utilité résultante de la
@@ -89,13 +80,22 @@ public class AlphaBetaImpl implements EvaluationChoix {
                 return fonction.evaluerUtilite(g2) - fonction.evaluerUtilite(g1);
             }
         });
+        System.out.println(grille);
+        System.out.println(joueur);
+        System.out.println(grille.getPositionLibres());
+        System.out.println();
 
         for (Position libre : grille.getPositionLibres()) {
+
             Grille prochain = grille.clone();
             prochain.set(libre, joueur);
 
             branchements.put(prochain, libre);
         }
+        // for (Entry<Grille, Position> entry : branchements.entrySet()) {
+        // System.out.println(entry.getValue());
+        // }
+        // System.out.println();
 
         return branchements;
     }

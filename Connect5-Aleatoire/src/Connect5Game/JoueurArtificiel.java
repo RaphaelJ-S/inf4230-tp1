@@ -17,12 +17,16 @@ public class JoueurArtificiel implements Joueur {
 
     @Override
     public Position getProchainCoup(Grille grille, int delais) {
-
+        EvaluationChoix eval = new EvaluationChoixAlphaBeta();
+        if (delais <= 100) {
+            eval = new EvaluationChoixAleatoire();
+        }
         // Dépendant du délais, on pourrait décider d'effectuer un algorithme différent.
         // par exemple, on pourrait limiter la profondeur de la recherche.
         // EvaluationChoix eval = new AleatoireImpl();
-        EvaluationChoix eval = new AlphaBetaImpl();
-        return eval.evaluer(grille, delais);
+        ParametreRecherche param = new ParametreRecherche(new ConditionArretRegleJeu(), new UtiliteTousJoueurs());
+
+        return eval.evaluer(grille, delais, param);
     }
 
 }
