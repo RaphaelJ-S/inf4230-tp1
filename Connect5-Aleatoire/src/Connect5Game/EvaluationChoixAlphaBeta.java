@@ -1,7 +1,7 @@
 package Connect5Game;
 
 import java.util.TreeMap;
-import java.util.Map.Entry;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
@@ -9,6 +9,21 @@ import java.util.Comparator;
  * jeu de Connect5.
  */
 public class EvaluationChoixAlphaBeta implements EvaluationChoix {
+    private class Successeur
+    {
+        Successeur(Grille agrille, Position positionChoisie)
+        {
+            grille = agrille;
+            position = positionChoisie;
+        }
+
+        protected Grille grille = null;
+        protected Position position = null;
+    }
+
+    int maxProfondeur = 5;
+    int profondeur = 0;
+    TreeMap<Integer, Successeur> choix = new TreeMap<>();
 
     /**
      * Retourne une position représentant un coup dans une partie de Connect5.
@@ -19,32 +34,26 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
      */
     @Override
     public Position evaluer(Grille grille, int delais, ParametreRecherche param) {
-        Position choix = null;
-        int utilite = Integer.MIN_VALUE;
-        for (Entry<Grille, Position> libres : enumererSuccesseurs(grille, grille.getJoeurCourant(), param.getFonction())
-                .entrySet()) {
-            int nv_utilite = max(libres.getKey(), Integer.MIN_VALUE, Integer.MAX_VALUE, param);
-            System.out.println(nv_utilite);
-            choix = nv_utilite >= utilite ? libres.getValue() : choix;
-            utilite = nv_utilite;
-        }
 
-        return choix;
+        int utilite = max(grille, Integer.MIN_VALUE, Integer.MAX_VALUE, param);
+        System.out.println(utilite);
+        return choix.get(utilite).position;
     }
 
     // calcule l'utilité du MAX de l'état dans alpha-beta
     private int max(Grille grille, int alpha, int beta, ParametreRecherche param) {
         int joueur = grille.getJoeurCourant();
         int utilite = Integer.MIN_VALUE;
-        if (param.verifierCondition(grille)) {
+        if (maxProfondeur == profondeur) {
             return param.calculerUtilite(grille);
         }
 
-        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, param.getFonction()).entrySet()) {
+        for (Successeur successeur : getSuccesseurs(grille, joueur, param.getFonction())) {
+            int minVal = min(successeur.grille, alpha, beta, param);
+            choix.put(minVal, successeur);
 
-            utilite = Math.max(utilite, min(entry.getKey(), alpha, beta, param));
-            if (utilite >= beta)
-                return utilite;
+            utilite = Math.max(utilite, minVal);
+            if (utilite >= beta) return utilite;
             alpha = Math.max(alpha, utilite);
         }
         return utilite;
@@ -55,16 +64,14 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
         int joueur = grille.getJoeurCourant() == 1 ? 2 : 1;
         int utilite = Integer.MAX_VALUE;
 
-        if (param.verifierCondition(grille)) {
-
+        if (maxProfondeur == profondeur) {
             return param.calculerUtilite(grille);
         }
 
-        for (Entry<Grille, Position> entry : enumererSuccesseurs(grille, joueur, param.getFonction()).entrySet()) {
+        for (Successeur successeur : getSuccesseurs(grille, joueur, param.getFonction())) {
 
-            utilite = Math.min(utilite, max(entry.getKey(), alpha, beta, param));
-            if (utilite <= alpha)
-                return utilite;
+            utilite = Math.min(utilite, max(successeur.grille, alpha, beta, param));
+            if (utilite <= alpha) return utilite;
             beta = Math.min(beta, utilite);
         }
         return utilite;
@@ -100,4 +107,14 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
         return branchements;
     }
 
+    private ArrayList<Successeur> getSuccesseurs(Grille grille, int joueur, Utilite fonction) {
+        ArrayList<Successeur> successeurs = new ArrayList<Successeur>();
+        for (Position libre : grille.getPositionLibres()){
+            Grille successeur = grille.clone();
+            successeur.set(libre, joueur);
+            successeurs.add(new Successeur(successeur, libre));
+        }
+        ++profondeur;
+        return successeurs;
+    }
 }

@@ -6,9 +6,11 @@ import java.util.HashMap;
 public class UtiliteTousJoueurs implements Utilite {
 
     enum Directions {
+        gauche,
         hautGauche,
         haut,
         hautDroite,
+        droite,
         basGauche,
         bas,
         basDroite
@@ -87,6 +89,9 @@ public class UtiliteTousJoueurs implements Utilite {
             do {
                 switch (direction) {
                     // On commence par ajuster notre curseur sur la prochaine case à valider
+                    case gauche:
+                        --x;
+                        break;
                     case hautGauche:
                         --x;
                         --y;
@@ -97,6 +102,9 @@ public class UtiliteTousJoueurs implements Utilite {
                     case hautDroite:
                         ++x;
                         --y;
+                        break;
+                    case droite:
+                        ++x;
                         break;
                     case basGauche:
                         --x;

@@ -111,8 +111,7 @@ public class Grille {
     @Override
     public Grille clone() {
         Grille copie = new Grille(data.length, data[0].length);
-        for (int l = 0; l < data.length; l++)
-            System.arraycopy(data[l], 0, copie.data[l], 0, data[l].length);
+        for (int l = 0; l < data.length; l++) System.arraycopy(data[l], 0, copie.data[l], 0, data[l].length);
         copie.setJoueurCourant(joueurCourant);
         return copie;
     }
@@ -128,5 +127,4 @@ public class Grille {
     protected byte[][] data;
     protected LinkedList<Position> positionsToHighlight = new LinkedList<Position>();
     private int joueurCourant = 1;
-
 }
