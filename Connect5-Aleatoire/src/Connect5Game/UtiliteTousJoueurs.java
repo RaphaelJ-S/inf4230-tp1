@@ -75,11 +75,12 @@ public class UtiliteTousJoueurs implements Utilite {
     // Pour evaluer l'utilité d'une position, on regarde chacune des directions à
     // partir de cette position
     // On part de la valeur 1, si une direction offre une possibilité de victoire,
-    // on fait 1 * 10^nb jetons du joueurCourant courant dans cette direction
+    // on fait 10^nb jetons du joueurCourant courant dans cette direction
     // Si une direction n'a pas de possibilité de victoire, à cause d'un jeton de
     // l'adversaire ou une case non-accessible, cette direction vaut 0.
     private int evaluerPosition(Grille grille, Position aEvaluer, int joueurCourant) {
         final int distanceMaximale = 4; // Distance maximale par rapport à la position à evaluer dans le but d'atteindre une combinaison de 5 jetons et gagner la partie
+
         LinkedList<Directions> directionsOpposees = new LinkedList<Directions>(EnumSet.range(Directions.droite, Directions.hautDroite));
         int utilite = 0;
     
@@ -99,31 +100,22 @@ public class UtiliteTousJoueurs implements Utilite {
                 caseValide = validerCase(grille, positionDirectionOpposee, joueurCourant);
                 if (caseValide) {
                     positionsOpposees.addFirst(positionDirectionOpposee);
-                    if (grille.get(positionDirectionOpposee) == joueurCourant) {
-                        ++nbJetons;
-                    }
+                    if (grille.get(positionDirectionOpposee) == joueurCourant) ++nbJetons;
                     ++distanceOpposee;
                 }
             } while (caseValide && distanceOpposee < distanceMaximale);
             // On vérifie ensuite toutes les combinaisons gagnante entre une direction et sa direction opposée
             do {
-                if (distance + distanceOpposee == distanceMaximale)
-                {
+                if (distance + distanceOpposee == distanceMaximale){
                     // On ajoute une valeur d'utilité uniquement quand il est possible de gagner pour une combinaison (pas de case inaccessible ou utilisée par l'adversaire)
-                    utilite += 1 * Math.pow(10, nbJetons);
-                    if (grille.get(positionsOpposees.poll()) == joueurCourant) {
-                        --nbJetons;
-                    }
+                    utilite += Math.pow(10, nbJetons);
+                    if (grille.get(positionsOpposees.poll()) == joueurCourant) --nbJetons;
                     --distanceOpposee;
                 }
-
                 positionDirection = trouverProchainePositionAValider(direction, positionDirection);
                 caseValide = validerCase(grille, positionDirection, joueurCourant);
-
                 if (caseValide) {
-                    if (grille.get(positionDirection) == joueurCourant) {
-                        ++nbJetons;
-                    }
+                    if (grille.get(positionDirection) == joueurCourant) ++nbJetons;
                     ++distance;
                 }
             } while (caseValide && distance < distanceMaximale);
