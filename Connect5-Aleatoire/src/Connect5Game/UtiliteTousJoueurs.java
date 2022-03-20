@@ -109,6 +109,7 @@ public class UtiliteTousJoueurs implements Utilite {
                 if (distance + distanceOpposee == distanceMaximale){
                     // On ajoute une valeur d'utilité uniquement quand il est possible de gagner pour une combinaison (pas de case inaccessible ou utilisée par l'adversaire)
                     utilite += Math.pow(10, nbJetons);
+                    if (distance == distanceMaximale) break; // Uniquement besoin de calculer l'utilité pour le dernier cas possible, on peut donc sortir maintenant
                     if (grille.get(positionsOpposees.poll()) == joueurCourant) --nbJetons;
                     --distanceOpposee;
                 }
@@ -118,7 +119,7 @@ public class UtiliteTousJoueurs implements Utilite {
                     if (grille.get(positionDirection) == joueurCourant) ++nbJetons;
                     ++distance;
                 }
-            } while (caseValide && distance < distanceMaximale);
+            } while (caseValide && distance <= distanceMaximale);
         }
         return utilite;
     }
