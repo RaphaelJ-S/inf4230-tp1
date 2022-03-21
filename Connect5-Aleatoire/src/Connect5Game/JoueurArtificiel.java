@@ -24,9 +24,9 @@ public class JoueurArtificiel implements Joueur {
         // Dépendant du délais, on pourrait décider d'effectuer un algorithme différent.
         // par exemple, on pourrait limiter la profondeur de la recherche.
         // EvaluationChoix eval = new AleatoireImpl();
-        ConditionArret condition = new ConditionArretRegleJeu();
-        condition.setProfondeurMax(2);
-        ParametreRecherche param = new ParametreRecherche(condition, new UtiliteTousJoueurs());
+        ConditionArret condition = new ConditionArretRegleJeu(5);
+
+        ParametreRecherche param = new ParametreRecherche(condition, new UtiliteCopie());
 
         return eval.evaluer(grille, delais, param);
     }

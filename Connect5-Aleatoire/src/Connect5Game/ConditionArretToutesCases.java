@@ -1,7 +1,6 @@
 package Connect5Game;
 
 public class ConditionArretToutesCases implements ConditionArret {
-    private int profondeurMax = Integer.MAX_VALUE;
 
     @Override
     public boolean conditionArret(Grille grille) {
@@ -9,9 +8,14 @@ public class ConditionArretToutesCases implements ConditionArret {
     }
 
     @Override
-    public void setProfondeurMax(int profondeurMax) {
-        this.profondeurMax = profondeurMax;
+    public void incrementerProfondeur() {
+        return;
 
+    }
+
+    @Override
+    public void decrementerProfondeur() {
+        return;
     }
 
 }
