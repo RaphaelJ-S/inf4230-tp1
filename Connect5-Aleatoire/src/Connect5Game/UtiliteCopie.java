@@ -12,7 +12,7 @@ public class UtiliteCopie implements Utilite {
         return utilitesJoueurs[joueurCourant] - utilitesJoueurs[adversaire];
     }
 
-    public int[] determineGagnant(Grille grille) {
+    private int[] determineGagnant(Grille grille) {
         lastValue = 0; // reset status
 
         // horizontal

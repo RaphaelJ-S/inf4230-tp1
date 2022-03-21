@@ -19,7 +19,6 @@ public class ConditionArretRegleJeu implements ConditionArret {
         boolean arret = grille.nbLibre() == 0 || profondeurMax < profondeurCourante;
         if (!arret) {
             GrilleVerificateur verif = new GrilleVerificateur();
-            System.out.println(verif.determineGagnant(grille));
             arret = verif.determineGagnant(grille) != 0;
 
         }

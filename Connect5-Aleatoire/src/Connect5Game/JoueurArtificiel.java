@@ -21,14 +21,34 @@ public class JoueurArtificiel implements Joueur {
         if (delais <= 100) {
             eval = new EvaluationChoixAleatoire();
         }
+
         // Dépendant du délais, on pourrait décider d'effectuer un algorithme différent.
         // par exemple, on pourrait limiter la profondeur de la recherche.
         // EvaluationChoix eval = new AleatoireImpl();
-        ConditionArret condition = new ConditionArretRegleJeu(5);
 
-        ParametreRecherche param = new ParametreRecherche(condition, new UtiliteCopie());
+        ParametreRecherche param = determinerBonParametres(delais);
 
         return eval.evaluer(grille, delais, param);
+    }
+
+    private ParametreRecherche determinerBonParametres(int delais) {
+        ParametreRecherche param = null;
+        Utilite fonction = new UtiliteCopie();
+        if (delais <= 1000) {
+            ConditionArret arret = new ConditionArretRegleJeu(2);
+            param = new ParametreRecherche(arret, fonction, 2);
+        } else if (delais <= 2000) {
+            ConditionArret arret = new ConditionArretRegleJeu(3);
+            param = new ParametreRecherche(arret, fonction, 3);
+        } else if (delais <= 3000) {
+            ConditionArret arret = new ConditionArretRegleJeu(4);
+            param = new ParametreRecherche(arret, fonction, 4);
+        } else {
+            ConditionArret arret = new ConditionArretRegleJeu(5);
+            param = new ParametreRecherche(arret, fonction, 5);
+        }
+
+        return param;
     }
 
 }

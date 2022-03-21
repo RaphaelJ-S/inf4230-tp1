@@ -32,7 +32,7 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
         Successeur proc = null;
         int max = Integer.MIN_VALUE;
         Position choix = null;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < param.getNbrSuccesseurs(); i++) {
             proc = succ.poll();
             if (proc == null)
                 break;
@@ -59,7 +59,7 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
         }
         PriorityQueue<Successeur> prochains = enumererSuccesseursTries(grille, joueur, param);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < param.getNbrSuccesseurs(); i++) {
             Successeur prochain = prochains.poll();
             if (prochain != null) {
                 utilite = Math.max(utilite, min(prochain.grille, alpha, beta, param));
@@ -103,7 +103,7 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
         }
         PriorityQueue<Successeur> prochains = enumererSuccesseursTries(grille, joueur, param);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < param.getNbrSuccesseurs(); i++) {
             Successeur prochain = prochains.poll();
             if (prochain != null) {
                 utilite = Math.min(utilite, max(prochain.grille, alpha, beta, param));
