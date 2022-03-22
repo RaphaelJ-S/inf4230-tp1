@@ -15,45 +15,45 @@ public class UtiliteCopie implements Utilite {
     private int[] determineGagnant(Grille grille) {
         lastValue = 0; // reset status
 
-        // horizontal
-        for (int l = 0; l < grille.data.length; l++) {
-            for (int c = 0; c < grille.data[0].length; c++) {
+        // horizontale
+        for (int l = 0; l < grille.data.length; ++l) {
+            for (int c = 0; c < grille.data[0].length; ++c) {
                 check(grille.data[l][c]);
             }
             check(20);
         }
 
-        // vertical
-        for (int c = 0; c < grille.data[0].length; c++) {
-            for (int l = 0; l < grille.data.length; l++) {
+        // verticale
+        for (int c = 0; c < grille.data[0].length; ++c) {
+            for (int l = 0; l < grille.data.length; ++l) {
                 check(grille.data[l][c]);
             }
             check(20);
         }
 
-        // Diagonal \\\\\\\
-        for (int c = -grille.data.length; c < grille.data[0].length; c++) {
+        // Diagonale du haut vers le bas
+        for (int c = -grille.data.length; c < grille.data[0].length; ++c) {
             int c2 = c;
             int l = 0;
             if (c2 < 0) {
                 l = -c2;
                 c2 = 0;
             }
-            for (; c2 < grille.data[0].length && l < grille.data.length; c2++, l++) {
+            for (; c2 < grille.data[0].length && l < grille.data.length; ++c2, ++l) {
                 check(grille.data[l][c2]);
             }
             check(20);
         }
 
-        // Diagonal //////
-        for (int c = -grille.data.length; c < grille.data[0].length; c++) {
+        // Diagonale du bas vers le haut
+        for (int c = -grille.data.length; c < grille.data[0].length; ++c) {
             int c2 = c;
             int l = grille.data.length - 1;
             if (c2 < 0) {
                 l += c2;
                 c2 = 0;
             }
-            for (; c2 < grille.data[0].length && l >= 0; c2++, l--) {
+            for (; c2 < grille.data[0].length && l >= 0; ++c2, --l) {
                 check(grille.data[l][c2]);
             }
             check(20);
@@ -83,9 +83,9 @@ public class UtiliteCopie implements Utilite {
 
         } else {
             if (estJoueur(value)) {
-                count++;
+                ++count;
             } else if (value == 0) {
-                suiteZero++;
+                ++suiteZero;
             }
             lastValue = value;
         }
