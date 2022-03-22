@@ -8,27 +8,27 @@ public class UtiliteCopie implements Utilite {
         int adversaire = joueurCourant == 1 ? 2 : 1;
         utilitesJoueurs[1] = 0;
         utilitesJoueurs[2] = 0;
-        determineGagnant(grille);
+        calculerUtilite(grille);
         return utilitesJoueurs[joueurCourant] - utilitesJoueurs[adversaire];
     }
 
-    private int[] determineGagnant(Grille grille) {
+    private int[] calculerUtilite(Grille grille) {
         lastValue = 0; // reset status
 
         // horizontale
         for (int l = 0; l < grille.data.length; ++l) {
             for (int c = 0; c < grille.data[0].length; ++c) {
-                check(grille.data[l][c]);
+                verifierCase(grille.data[l][c]);
             }
-            check(20);
+            verifierCase(20);
         }
 
         // verticale
         for (int c = 0; c < grille.data[0].length; ++c) {
             for (int l = 0; l < grille.data.length; ++l) {
-                check(grille.data[l][c]);
+                verifierCase(grille.data[l][c]);
             }
-            check(20);
+            verifierCase(20);
         }
 
         // Diagonale du haut vers le bas
@@ -40,9 +40,9 @@ public class UtiliteCopie implements Utilite {
                 c2 = 0;
             }
             for (; c2 < grille.data[0].length && l < grille.data.length; ++c2, ++l) {
-                check(grille.data[l][c2]);
+                verifierCase(grille.data[l][c2]);
             }
-            check(20);
+            verifierCase(20);
         }
 
         // Diagonale du bas vers le haut
@@ -54,22 +54,22 @@ public class UtiliteCopie implements Utilite {
                 c2 = 0;
             }
             for (; c2 < grille.data[0].length && l >= 0; ++c2, --l) {
-                check(grille.data[l][c2]);
+                verifierCase(grille.data[l][c2]);
             }
-            check(20);
+            verifierCase(20);
         }
 
         return utilitesJoueurs;
     }
 
-    private void check(int value) {
+    private void verifierCase(int value) {
         if (value != lastValue) {
 
             if (estJoueur(lastValue)) {
-                finiParZero = value == 0;
+                finiParZero = (value == 0);
 
                 if (finiParZero || suiteZero + count >= 5) {
-                    utilitesJoueurs[lastValue] += 10 << count;
+                    utilitesJoueurs[lastValue] += (10 << count);
                 }
                 suiteZero = finiParZero ? 1 : 0;
 
@@ -78,7 +78,7 @@ public class UtiliteCopie implements Utilite {
                 suiteZero = 0;
             }
             count = estJoueur(value) ? 1 : 0;
-            suiteZero = value == 0 && !(lastValue > 2) ? 1 : 0;
+            suiteZero = (value == 0 && !(lastValue > 2)) ? 1 : 0;
             lastValue = value;
 
         } else {
@@ -91,8 +91,8 @@ public class UtiliteCopie implements Utilite {
         }
     }
 
-    private boolean estJoueur(int j) {
-        return j == 1 || j == 2;
+    private boolean estJoueur(int joueur) {
+        return joueur == 1 || joueur == 2;
     }
 
     protected boolean finiParZero = false;
