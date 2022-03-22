@@ -32,21 +32,21 @@ public class JoueurArtificiel implements Joueur {
     }
 
     private ParametreRecherche determinerBonParametres(int delais) {
-        ParametreRecherche param = null;
-        Utilite fonction = new UtiliteCopie();
+        int nbrSuccesseurs = 0;
+        int nbrCoupsAVerifier = 0;
         if (delais <= 1000) {
-            ConditionArret arret = new ConditionArretRegleJeu(2);
-            param = new ParametreRecherche(arret, fonction, 2);
-        } else if (delais <= 2000) {
-            ConditionArret arret = new ConditionArretRegleJeu(3);
-            param = new ParametreRecherche(arret, fonction, 3);
+            nbrSuccesseurs = 1;
+            nbrCoupsAVerifier = 12;
         } else if (delais <= 3000) {
-            ConditionArret arret = new ConditionArretRegleJeu(4);
-            param = new ParametreRecherche(arret, fonction, 4);
+            nbrSuccesseurs = 2;
+            nbrCoupsAVerifier = 13;
         } else {
-            ConditionArret arret = new ConditionArretRegleJeu(5);
-            param = new ParametreRecherche(arret, fonction, 5);
+            nbrSuccesseurs = 2;
+            nbrCoupsAVerifier = 14;
         }
+        Utilite fonction = new UtiliteCopie();
+        ConditionArret arret = new ConditionArretRegleJeu(nbrCoupsAVerifier);
+        ParametreRecherche param = new ParametreRecherche(arret, fonction, nbrSuccesseurs);
 
         return param;
     }
