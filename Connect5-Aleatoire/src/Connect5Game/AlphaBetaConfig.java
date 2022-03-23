@@ -1,11 +1,11 @@
 package Connect5Game;
 
-public class ParametreRecherche {
+public class AlphaBetaConfig {
     private ConditionArret conditions;
     private Utilite fonction;
     private int nbrSuccesseurs;
 
-    public ParametreRecherche(ConditionArret cond, Utilite fonction, int nbrSuccesseurs) {
+    public AlphaBetaConfig(ConditionArret cond, Utilite fonction, int nbrSuccesseurs) {
         conditions = cond;
         this.fonction = fonction;
         this.nbrSuccesseurs = nbrSuccesseurs;

@@ -18,22 +18,16 @@ public class JoueurArtificiel implements Joueur {
     @Override
     public Position getProchainCoup(Grille grille, int delais) {
         EvaluationChoix eval = new EvaluationChoixAlphaBeta();
-        if (delais <= 100) {
-            eval = new EvaluationChoixAleatoire();
-        }
-
-        // Dépendant du délais, on pourrait décider d'effectuer un algorithme différent.
-        // par exemple, on pourrait limiter la profondeur de la recherche.
-        // EvaluationChoix eval = new AleatoireImpl();
-
-        ParametreRecherche param = determinerBonParametres(delais);
+        if (delais <= 100) eval = new EvaluationChoixAleatoire();
+        AlphaBetaConfig param = determinerBonParametres(delais);
 
         return eval.evaluer(grille, delais, param);
     }
 
-    private ParametreRecherche determinerBonParametres(int delais) {
+    private AlphaBetaConfig determinerBonParametres(int delais) {
         int nbrSuccesseurs = 0;
         int nbrCoupsAVerifier = 0;
+
         if (delais <= 1000) {
             nbrSuccesseurs = 1;
             nbrCoupsAVerifier = 12;
@@ -44,9 +38,10 @@ public class JoueurArtificiel implements Joueur {
             nbrSuccesseurs = 2;
             nbrCoupsAVerifier = 14;
         }
-        Utilite fonction = new UtiliteCopie();
+        
+        Utilite fonction = new UtiliteTousJoueurs();
         ConditionArret arret = new ConditionArretRegleJeu(nbrCoupsAVerifier);
-        ParametreRecherche param = new ParametreRecherche(arret, fonction, nbrSuccesseurs);
+        AlphaBetaConfig param = new AlphaBetaConfig(arret, fonction, nbrSuccesseurs);
 
         return param;
     }
