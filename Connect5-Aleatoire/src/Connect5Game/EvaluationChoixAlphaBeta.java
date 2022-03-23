@@ -40,6 +40,8 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
             if (utilite > max) {
                 max = utilite > max ? utilite : max;
                 choix = proc.positionChoisie;
+                System.out.println(choix + " : " + max);
+
             }
 
         }

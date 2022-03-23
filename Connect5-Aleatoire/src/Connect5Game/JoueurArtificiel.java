@@ -38,8 +38,8 @@ public class JoueurArtificiel implements Joueur {
             nbrSuccesseurs = 1;
             nbrCoupsAVerifier = 12;
         } else if (delais <= 3000) {
-            nbrSuccesseurs = 2;
-            nbrCoupsAVerifier = 13;
+            nbrSuccesseurs = 3;
+            nbrCoupsAVerifier = 6;
         } else {
             nbrSuccesseurs = 2;
             nbrCoupsAVerifier = 14;

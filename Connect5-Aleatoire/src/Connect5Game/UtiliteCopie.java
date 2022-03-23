@@ -9,6 +9,7 @@ public class UtiliteCopie implements Utilite {
         utilitesJoueurs[1] = 0;
         utilitesJoueurs[2] = 0;
         determineGagnant(grille);
+
         return utilitesJoueurs[joueurCourant] - utilitesJoueurs[adversaire];
     }
 
@@ -20,6 +21,7 @@ public class UtiliteCopie implements Utilite {
             for (int c = 0; c < grille.data[0].length; c++) {
                 check(grille.data[l][c]);
             }
+
             check(20);
         }
 
@@ -69,7 +71,8 @@ public class UtiliteCopie implements Utilite {
                 finiParZero = value == 0;
 
                 if (finiParZero || suiteZero + count >= 5) {
-                    utilitesJoueurs[lastValue] += 10 << count;
+                    int augmentation = (finiParZero || suiteZero > 0) && count > 1 ? 2 : 1;
+                    utilitesJoueurs[lastValue] += Math.pow(10, count) * augmentation + suiteZero;
                 }
                 suiteZero = finiParZero ? 1 : 0;
 
