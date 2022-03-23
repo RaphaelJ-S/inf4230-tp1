@@ -10,7 +10,7 @@ public class UtiliteTousJoueurs implements Utilite {
         utilitesJoueurs[2] = 0;
         calculerUtilite(grille);
 
-        return utilitesJoueurs[joueurCourant] - utilitesJoueurs[adversaire];
+        return utilitesJoueurs[joueurCourant] - 2 * utilitesJoueurs[adversaire];
     }
 
     private int[] calculerUtilite(Grille grille) {
@@ -64,7 +64,7 @@ public class UtiliteTousJoueurs implements Utilite {
         if (value != lastValue) {
 
             if (estJoueur(lastValue)) {
-                finiParZero = (value == 0);
+                finiParZero = estZero(value);
 
                 if (finiParZero || suiteZero + count >= 5) {
                     int augmentation = (finiParZero || suiteZero > 0) && count > 1 ? 2 : 1;
@@ -72,12 +72,16 @@ public class UtiliteTousJoueurs implements Utilite {
                 }
                 suiteZero = finiParZero ? 1 : 0;
 
-            } else if (lastValue > 2) {
+            } else if (estBloc(lastValue)) {
 
-                suiteZero = 0;
+                suiteZero = estZero(value) ? 1 : 0;
+            } else {
+                if (!estJoueur(value)) {
+                    suiteZero = 0;
+                }
             }
             count = estJoueur(value) ? 1 : 0;
-            suiteZero = (value == 0 && !(lastValue > 2)) ? 1 : 0;
+
             lastValue = value;
 
         } else {
@@ -89,8 +93,16 @@ public class UtiliteTousJoueurs implements Utilite {
         }
     }
 
-    private boolean estJoueur(int joueur) {
-        return joueur == 1 || joueur == 2;
+    private boolean estJoueur(int valeur) {
+        return valeur == 1 || valeur == 2;
+    }
+
+    private boolean estZero(int valeur) {
+        return valeur == 0;
+    }
+
+    private boolean estBloc(int valeur) {
+        return valeur > 2;
     }
 
     protected boolean finiParZero = false;
