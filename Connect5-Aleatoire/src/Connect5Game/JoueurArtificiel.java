@@ -20,9 +20,9 @@ public class JoueurArtificiel implements Joueur {
         EvaluationChoix eval = new EvaluationChoixAlphaBeta();
         if (delais <= 100)
             eval = new EvaluationChoixAleatoire();
-        AlphaBetaConfig param = determinerBonParametres(delais);
+        AlphaBetaConfig config = determinerBonParametres(delais);
 
-        return eval.evaluer(grille, delais, param);
+        return eval.evaluer(grille, delais, config);
     }
 
     private AlphaBetaConfig determinerBonParametres(int delais) {

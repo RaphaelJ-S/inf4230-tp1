@@ -10,7 +10,7 @@ public class UtiliteTousJoueurs implements Utilite {
         utilitesJoueurs[2] = 0;
         calculerUtilite(grille);
 
-        return utilitesJoueurs[joueurCourant] - 2 * utilitesJoueurs[adversaire];
+        return utilitesJoueurs[joueurCourant] - utilitesJoueurs[adversaire];
     }
 
     private int[] calculerUtilite(Grille grille) {
@@ -68,7 +68,7 @@ public class UtiliteTousJoueurs implements Utilite {
 
                 if (finiParZero || suiteZero + count >= 5) {
                     // int augmentation = (finiParZero || suiteZero > 0) && count > 1 ? 2 : 1;
-                    utilitesJoueurs[lastValue] += Math.pow(10, count) + suiteZero + (finiParZero ? 10 * count : 0);
+                    utilitesJoueurs[lastValue] += (10 << count);
                 }
                 suiteZero = finiParZero ? 1 : 0;
 
@@ -76,12 +76,9 @@ public class UtiliteTousJoueurs implements Utilite {
 
                 suiteZero = estZero(value) ? 1 : 0;
             } else {
-                if (!estJoueur(value)) {
-                    suiteZero = 0;
-                }
+                suiteZero = 0;
             }
             count = estJoueur(value) ? 1 : 0;
-
             lastValue = value;
 
         } else {
