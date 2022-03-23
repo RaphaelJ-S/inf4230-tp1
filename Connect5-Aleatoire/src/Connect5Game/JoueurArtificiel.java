@@ -30,8 +30,8 @@ public class JoueurArtificiel implements Joueur {
         int nbrCoupsAVerifier = 0;
 
         if (delais <= 1000) {
-            nbrSuccesseurs = 1;
-            nbrCoupsAVerifier = 12;
+            nbrSuccesseurs = 3;
+            nbrCoupsAVerifier = 4;
         } else if (delais <= 3000) {
             nbrSuccesseurs = 5;
             nbrCoupsAVerifier = 5;
