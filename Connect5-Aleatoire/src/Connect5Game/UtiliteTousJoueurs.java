@@ -67,8 +67,8 @@ public class UtiliteTousJoueurs implements Utilite {
                 finiParZero = estZero(value);
 
                 if (finiParZero || suiteZero + count >= 5) {
-                    int augmentation = (finiParZero || suiteZero > 0) && count > 1 ? 2 : 1;
-                    utilitesJoueurs[lastValue] += Math.pow(10, count) * augmentation + suiteZero;
+                    // int augmentation = (finiParZero || suiteZero > 0) && count > 1 ? 2 : 1;
+                    utilitesJoueurs[lastValue] += Math.pow(10, count) + suiteZero + (finiParZero ? 100 : 0);
                 }
                 suiteZero = finiParZero ? 1 : 0;
 
