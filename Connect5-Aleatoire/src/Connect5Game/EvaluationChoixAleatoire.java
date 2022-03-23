@@ -14,7 +14,7 @@ public class EvaluationChoixAleatoire implements EvaluationChoix {
      * @return Une position aléatoire.
      */
     @Override
-    public Position evaluer(Grille grille, int delais, ParametreRecherche param) {
+    public Position evaluer(Grille grille, int delais, AlphaBetaConfig param) {
         Random random = new Random();
         ArrayList<Integer> casesvides = new ArrayList<Integer>();
         int nbcol = grille.getData()[0].length;
