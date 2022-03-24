@@ -1,7 +1,22 @@
 package Connect5Game;
 
+/**
+ * Implémentation pour le calcul de l'utilité d'une grille.
+ */
 public class UtiliteTousJoueurs implements Utilite {
 
+    private boolean finiParZero = false; // Si la suite d'un joueur fini par un zéro
+    private int suiteZero = 0; // Le nombre de zéro de suite
+    private int[] utilitesJoueurs = new int[3]; // L'utilité calculée des joueurs [1] pour j1 et [2] pour j2
+    private int lastValue = 0; // La dernière valeur lue dans la grille
+    private int count = 0; // La longueur de la suite d'un joueur
+
+    /**
+     * Calcule l'utilité de la grille donnée.
+     * 
+     * @param grille La grille à évaluer
+     * @return La valeur d'utilité de la grille
+     */
     @Override
     public int evaluerUtilite(Grille grille) {
         int joueurCourant = grille.getJoeurCourant();
@@ -13,7 +28,12 @@ public class UtiliteTousJoueurs implements Utilite {
         return utilitesJoueurs[joueurCourant] - utilitesJoueurs[adversaire];
     }
 
-    private int[] calculerUtilite(Grille grille) {
+    /**
+     * Parcours la grille et calcule l'utilité.
+     * 
+     * @param grille La grille à évaluer
+     */
+    private void calculerUtilite(Grille grille) {
         lastValue = 0; // reset status
 
         // Horizontale
@@ -57,9 +77,14 @@ public class UtiliteTousJoueurs implements Utilite {
             verifierCase(20);
         }
 
-        return utilitesJoueurs;
     }
 
+    /**
+     * Vérification des condition pour le calcul d'une case par rapport à la case
+     * précédante.
+     * 
+     * @param value La valeur de la case à évaluer
+     */
     private void verifierCase(int value) {
         if (value != lastValue) {
 
@@ -67,8 +92,8 @@ public class UtiliteTousJoueurs implements Utilite {
                 finiParZero = estZero(value);
 
                 if (finiParZero || suiteZero + count >= 5) {
-                    // int augmentation = (finiParZero || suiteZero > 0) && count > 1 ? 2 : 1;
-                    utilitesJoueurs[lastValue] += (10 << count);
+                    int augmentation = (finiParZero || suiteZero > 0) && count > 1 ? 2 : 0;
+                    utilitesJoueurs[lastValue] += (10 << count) + suiteZero * count + augmentation * count;
                 }
                 suiteZero = finiParZero ? 1 : 0;
 
@@ -101,11 +126,5 @@ public class UtiliteTousJoueurs implements Utilite {
     private boolean estBloc(int valeur) {
         return valeur > 2;
     }
-
-    protected boolean finiParZero = false;
-    protected int suiteZero = 0;
-    protected int[] utilitesJoueurs = new int[3];
-    protected int lastValue = 0;
-    protected int count = 0;
 
 }

@@ -40,7 +40,15 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
         return choix;
     }
 
-    // calcule l'utilité du MAX de l'état dans alpha-beta
+    /**
+     * Calcul d'utilité pour le joueur MAX.
+     * 
+     * @param grille La grille à évaluer.
+     * @param alpha  La borne inférieure.
+     * @param beta   La borne supérieure.
+     * @param config Les paramètres de recherche.
+     * @return L'utilité maximale calculée.
+     */
     private int max(Grille grille, int alpha, int beta, AlphaBetaConfig config) {
         int joueur = grille.getJoeurCourant();
         int utilite = Integer.MIN_VALUE;
@@ -64,7 +72,15 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
         return utilite;
     }
 
-    // calcule l'utilité du MIN de l'état dans alpha-beta
+    /**
+     * Calcul d'utilité pour le joueur MIN.
+     * 
+     * @param grille La grille à évaluer.
+     * @param alpha  La borne inférieure.
+     * @param beta   La borne supérieure.
+     * @param config Les paramètres de recherche.
+     * @return L'utilité minimale calculée.
+     */
     private int min(Grille grille, int alpha, int beta, AlphaBetaConfig config) {
         int joueur = grille.getJoeurCourant() == 1 ? 2 : 1;
         int utilite = Integer.MAX_VALUE;
@@ -88,6 +104,15 @@ public class EvaluationChoixAlphaBeta implements EvaluationChoix {
         return utilite;
     }
 
+    /**
+     * Retourne les successeur d'une grille en ordre décroissant en fonction de la
+     * valeur d'utilité du successeurs.
+     * 
+     * @param grille La grille pour laquelle on génère les successeurs.
+     * @param joueur La valeur représentant le joueur courant.
+     * @param config Les paramètres de recherche.
+     * @return Les successeurs de la grille triés.
+     */
     private PriorityQueue<Successeur> enumererSuccesseursTries(Grille grille, int joueur, AlphaBetaConfig config) {
         PriorityQueue<Successeur> successeurs = new PriorityQueue<>(new Comparator<Successeur>() {
             public int compare(Successeur s1, Successeur s2) {

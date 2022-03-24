@@ -14,7 +14,6 @@ public class JoueurArtificiel implements Joueur {
      * @param delais Délais de rélexion en temps réel.
      * @return Retourne le meilleur coup calculé.
      */
-
     @Override
     public Position getProchainCoup(Grille grille, int delais) {
         EvaluationChoix eval = new EvaluationChoixAlphaBeta();
@@ -25,6 +24,12 @@ public class JoueurArtificiel implements Joueur {
         return eval.evaluer(grille, delais, config);
     }
 
+    /**
+     * Configure les paramètres de recherche en fonction du délais donné.
+     * 
+     * @param delais Le délais maximum pour la prise de décision.
+     * @return Les paramètres de recherche.
+     */
     private AlphaBetaConfig determinerBonParametres(int delais) {
         int nbrSuccesseurs = 0;
         int nbrCoupsAVerifier = 0;

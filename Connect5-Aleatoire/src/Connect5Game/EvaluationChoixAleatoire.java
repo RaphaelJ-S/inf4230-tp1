@@ -3,6 +3,10 @@ package Connect5Game;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Algorithme d'évaluation aléatoire pour le choix d'un prochain coup pour un
+ * jeu de Connect5.
+ */
 public class EvaluationChoixAleatoire implements EvaluationChoix {
 
     /**

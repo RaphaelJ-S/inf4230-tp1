@@ -1,5 +1,9 @@
 package Connect5Game;
 
+/**
+ * Condition d'arrêt prenant en compte les règle du jeu et la profondeur de
+ * l'algorithme.
+ */
 public class ConditionArretRegleJeu implements ConditionArret {
     private int profondeurMax;
     private int profondeurCourante;
