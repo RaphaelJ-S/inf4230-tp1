@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PMML version="4.1" xmlns="http://www.dmg.org/PMML-4_1">
+  <Header copyright="UQAM, INF-4230">
+    <Application name="INF-4230 TP3" version="0.0.1"/>
+  </Header>
+    <NeuralNetwork functionName="classification" algorithmName="RProp" activationFunction="logistic" normalizationMethod="none" numberOfLayers="2">
+     <NeuralInputs numberOfInputs="4">
+      <NeuralInput id="0,0" bias="3.8805843802579614">
+        <DerivedField optype="continuous" dataType="double">
+          <FieldRef field="field_0"/>
+        </DerivedField>
+      </NeuralInput>
+      <NeuralInput id="0,1" bias="-10.956529003343896">
+        <DerivedField optype="continuous" dataType="double">
+          <FieldRef field="field_1"/>
+        </DerivedField>
+      </NeuralInput>
+      <NeuralInput id="0,2" bias="-35.17670481356243">
+        <DerivedField optype="continuous" dataType="double">
+          <FieldRef field="field_2"/>
+        </DerivedField>
+      </NeuralInput>
+      <NeuralInput id="0,3" bias="-47.735283324998825">
+        <DerivedField optype="continuous" dataType="double">
+          <FieldRef field="field_3"/>
+        </DerivedField>
+      </NeuralInput>
+     </NeuralInputs>
+     <NeuralLayer>
+      <Neuron id="1,0" bias="0.4796620244755837">
+         <Con from="0,0" weight="-0.524249038810591"/>
+         <Con from="0,1" weight="1.7176858320968227"/>
+         <Con from="0,2" weight="-2.0237564797262353"/>
+         <Con from="0,3" weight="-2.1505368363690245"/>
+      </Neuron>
+      <Neuron id="1,1" bias="-11.102341942980289">
+         <Con from="0,0" weight="-1.9201506640742303"/>
+         <Con from="0,1" weight="-4.1214282124981745"/>
+         <Con from="0,2" weight="9.292171133914055"/>
+         <Con from="0,3" weight="10.724025939910174"/>
+      </Neuron>
+      <Neuron id="1,2" bias="4.606370569731969">
+         <Con from="0,0" weight="1.6495170133611488"/>
+         <Con from="0,1" weight="1.456987611080435"/>
+         <Con from="0,2" weight="-4.160562767689732"/>
+         <Con from="0,3" weight="-4.949193452435235"/>
+      </Neuron>
+      <Neuron id="1,3" bias="-2.23832857600807">
+         <Con from="0,0" weight="2.488540109161662"/>
+         <Con from="0,1" weight="-3.1588562911847724"/>
+         <Con from="0,2" weight="5.716899429971262"/>
+         <Con from="0,3" weight="5.233685802880816"/>
+      </Neuron>
+      <Neuron id="1,4" bias="0.8729882204391782">
+         <Con from="0,0" weight="-0.8628928049288114"/>
+         <Con from="0,1" weight="2.2943132992458923"/>
+         <Con from="0,2" weight="-3.0056970570289345"/>
+         <Con from="0,3" weight="-3.2886703294137285"/>
+      </Neuron>
+      <Neuron id="1,5" bias="1.1129546139261546">
+         <Con from="0,0" weight="0.12456874602760577"/>
+         <Con from="0,1" weight="0.42101166787846916"/>
+         <Con from="0,2" weight="0.16073981074845511"/>
+         <Con from="0,3" weight="-0.42289921323511004"/>
+      </Neuron>
+      <Neuron id="1,6" bias="-1.7294691186683124">
+         <Con from="0,0" weight="-0.05277684733143575"/>
+         <Con from="0,1" weight="-0.80354127128707"/>
+         <Con from="0,2" weight="2.1690432545465677"/>
+         <Con from="0,3" weight="1.4227607534475561"/>
+      </Neuron>
+     </NeuralLayer>
+     <NeuralLayer>
+      <Neuron id="2,0" bias="-0.14582951935591976">
+         <Con from="1,0" weight="1.9920122476576"/>
+         <Con from="1,1" weight="-3.4562770439990658"/>
+         <Con from="1,2" weight="2.2120269679981037"/>
+         <Con from="1,3" weight="-5.568991997411646"/>
+         <Con from="1,4" weight="2.6830261900195755"/>
+         <Con from="1,5" weight="-0.703209996079267"/>
+         <Con from="1,6" weight="-2.072951165919646"/>
+      </Neuron>
+      <Neuron id="2,1" bias="-1.602747477808052">
+         <Con from="1,0" weight="-1.822484633957"/>
+         <Con from="1,1" weight="-11.906767960661025"/>
+         <Con from="1,2" weight="2.4851819642349575"/>
+         <Con from="1,3" weight="7.953491729872823"/>
+         <Con from="1,4" weight="-3.496605847348095"/>
+         <Con from="1,5" weight="-1.6495747672516152"/>
+         <Con from="1,6" weight="-0.6329260769426669"/>
+      </Neuron>
+      <Neuron id="2,2" bias="-2.9169913144085036">
+         <Con from="1,0" weight="-2.7533444714568733"/>
+         <Con from="1,1" weight="9.494337094279782"/>
+         <Con from="1,2" weight="-6.525813328612896"/>
+         <Con from="1,3" weight="1.9855741776974662"/>
+         <Con from="1,4" weight="-3.536957778163497"/>
+         <Con from="1,5" weight="-1.5148702015598554"/>
+         <Con from="1,6" weight="2.203056860355129"/>
+      </Neuron>
+     </NeuralLayer>
+     <NeuralOutputs numberOfOutputs="3">
+      <NeuralOutput outputNeuron="2,0">
+        <DerivedField optype="categorical" dataType="string">
+          <NormDiscrete field="class" value="class_0"/>
+        </DerivedField>
+      </NeuralOutput>
+      <NeuralOutput outputNeuron="2,1">
+        <DerivedField optype="categorical" dataType="string">
+          <NormDiscrete field="class" value="class_1"/>
+        </DerivedField>
+      </NeuralOutput>
+      <NeuralOutput outputNeuron="2,2">
+        <DerivedField optype="categorical" dataType="string">
+          <NormDiscrete field="class" value="class_2"/>
+        </DerivedField>
+      </NeuralOutput>
+     </NeuralOutputs>
+  </NeuralNetwork>
+</PMML>
