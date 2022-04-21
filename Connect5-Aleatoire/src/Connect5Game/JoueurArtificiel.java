@@ -17,7 +17,7 @@ public class JoueurArtificiel implements Joueur {
     @Override
     public Position getProchainCoup(Grille grille, int delais) {
         EvaluationChoix eval = new EvaluationChoixAlphaBeta();
-        if (delais <= 100)
+        if (delais <= 1)
             eval = new EvaluationChoixAleatoire();
         AlphaBetaConfig config = determinerBonParametres(delais);
 
@@ -34,7 +34,10 @@ public class JoueurArtificiel implements Joueur {
         int nbrSuccesseurs = 0;
         int nbrCoupsAVerifier = 0;
 
-        if (delais <= 1000) {
+        if (delais <= 100) {
+            nbrSuccesseurs = 1;
+            nbrCoupsAVerifier = 3;
+        } else if (delais <= 1000) {
             nbrSuccesseurs = 3;
             nbrCoupsAVerifier = 4;
         } else if (delais <= 3000) {
