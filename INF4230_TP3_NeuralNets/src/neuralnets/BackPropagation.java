@@ -20,7 +20,7 @@ public class BackPropagation {
         // handle the output layer first
         double [] outputLayerDeltas = new double[_network.nbrOutputNeurons];
         int i = 0; // pour l'index dans le tableau de deltas puisque neuron_deltas est une liste d'array
-        for(Neuron output : _network.outputLayer) {
+        for(Neuron output : _network.layers[_network.layers.length - 1]) {
 
             outputLayerDeltas[i++] = (_expected - output.output) * output.output * (1 - output.output);
 
@@ -57,10 +57,24 @@ public class BackPropagation {
         return currentNeuron.output * (1 - currentNeuron.output) * sum; // output_i * (1 - output_i) * somme de w_ij * delta_j
     }
 
-
+    /***
+     * Mets à jours les poids de toutes les neurones du réseau
+     * 
+     * @param _network Le réseau de neurones à mettre à jours
+     * @param _neuron_deltas Les différences d'erreurs du réseau - Est ordonné inversément par rapport au réseau ie: indice 0 est la couche de sortie.
+     */
     public static void update_weights(final NeuralNet _network, final List<double[]> _neuron_deltas){
-        // update all layers using _neuron_deltas
-        
+        // update all layers using _neuron_deltas, starting from the output layer
+        for(int i = _network.layers.length - 1; i > 0 ; i--) {
+            Neuron [] curr = _network.layers[i];
+            Neuron [] prev = _network.layers[i-1];
+            double [] deltas = _neuron_deltas.isEmpty() ? null : _neuron_deltas.remove(0);
+            for(int k = 0; k < curr.length; k++) {
+                for(int j = 0; j < curr[k].weights.length; j++) {
+                    curr[k].weights[j] += _network.learningRate * prev[j].output * deltas[k];
+                }
+            }
+        }
     }
 
 }
