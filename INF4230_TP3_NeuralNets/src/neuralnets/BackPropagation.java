@@ -20,8 +20,7 @@ public class BackPropagation {
         double [] outputLayerDeltas = new double[_network.nbrOutputNeurons];
         int i = 0; // pour l'index dans le tableau de deltas puisque neuron_deltas est une liste d'array
         for(Neuron outputLayer : _network.layers[_network.layers.length - 1]) {
-
-            outputLayerDeltas[i++] = (_expected - outputLayer.output) * outputLayer.output * (1 - outputLayer.output);
+            outputLayerDeltas[i++] = (_expected - outputLayer.output) * outputLayer.output * (1 - outputLayer.output); //(d_i - output_i) * output_i * (1 - output_i)
 
         }
         neuron_deltas.add(outputLayerDeltas);
@@ -70,7 +69,7 @@ public class BackPropagation {
             double [] deltas = _neuron_deltas.isEmpty() ? null : _neuron_deltas.remove(0);
             for(int k = 0; k < curr.length; k++) {
                 for(int j = 0; j < curr[k].weights.length; ++j) {
-                    curr[k].weights[j] += _network.learningRate * prev[j].output * deltas[k];
+                    curr[k].weights[j] += _network.learningRate * prev[j].output * deltas[k]; // w_ij = w_ij + learningRate * x_i * delta_j
                 }
             }
         }
