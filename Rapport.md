@@ -19,7 +19,9 @@
 ### Commentaires sur les différents nombres d'époques
 
 Moyenne de 42.4/60 pour 10 tests à une époque de 10 (min 31, max 51)
+
 Moyenne de 38.8/60 pour 10 tests à une époque de 4000 (min 14, max 58)
+
 
 Nous pouvons constater que les résultats peuvent varier de façon importante dans les deux cas et que nous sommes près d'un taux d'erreur de 0.34 autant pour une époque de 10 que de 4000.
 
