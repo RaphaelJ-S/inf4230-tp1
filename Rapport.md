@@ -27,9 +27,11 @@ Nous pouvons constater que les résultats peuvent varier de façon importante da
 
 ### À quoi les variations du taux d'erreur pour un même ensemble de valeurs des (hyper-)paramètres, sont-elles dues?
 
-Les variations du taux d'erreurs dépendent des poids attribués à travers le réseau, ainsi que la valeur reçue en entrée
+Les variations du taux d'erreurs dépendent des poids attribués à travers le réseau, ainsi que la valeur reçue en entrée.  En effet, ces valeurs sont les seules qui varient d'un test à l'autre.
 
 ### Qu'observez-vous au niveau de ce taux lorsque vous comparez l'effet des valeurs pré-établies à celui d'un jeu de valeurs qui en est différent sur au moins un (hyper-)paramètre?
+
+Le changement au niveau du taux semble dépendre de l'hyper paramètre modifié, par exemple, une augmentation du taux d'apprentissage semble créer des écarts plus grands entre le taux d'échec des tests.  L'augmentation du nombre de couches cachées quant à elle aurait tendance à stabiliser davantage le taux d'échec d'un test à l'autre et il semble en être de même pour le nombre total de neurones par couche.
 
 ### Est-ce que le taux diminues systèmatiquement lorsqu'on augmente les valeurs des hyper-paramètres (couches, nombre neurones) et le nombre d'époques?
 
