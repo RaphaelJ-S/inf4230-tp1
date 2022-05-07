@@ -41,12 +41,60 @@ Avec une augmentation des hyper paramètres tels que le nombre de couches caché
 
 ## Expérimentations _Seeds_
 
-| Id  |  Architecture du réseau |  Nombre d'époques |  Taux d'apprentissage | Taux d'erreur moyen |
-| --- | ----------------------- | ----------------- | --------------------- | ------------------- |
-| 1   |                         |                   |                       |                     |
-| 2   |                         |                   |                       |                     |
-| 3   |                         |                   |                       |                     |
-| 4   |                         |                   |                       |                     |
-| 5   |                         |                   |                       |                     |
+Concernant ce dataset, on doit essayer de trouver une configuration d'hyper-paramètres qui maximisent le taux de succès. Pour ce faire, on dispose de 3 valeurs que l'on peut définir : le taux d'apprentissage, le nombre d'époques et l'architecture du réseau.
+Nous allons donc empiriquement déterminer des valeurs approchées des hyper-paramètres optimaux, par l'expérience, en commençant par fixer le taux d'apprentissage, le nom bre d'époques et enfin l'architecture du réseau. Les valeurs de taux de succès sont présentées en moyenne calculée à chaque fois sur 10 apprentissages faits dans les mêmes conditions.
 
-La meilleure configuration est : ???
+Commençons par le taux d'apprentissage, que l'on échantillonne de 0.1 à 0.5 avec un pas de 0.1 : 
+
+| Id  |  Architecture du réseau |  Nombre d'époques |  Taux d'apprentissage | Taux de succès moyen |
+| --- | ----------------------- | ----------------- | --------------------- | -------------------  |
+| 1   | 7x4x7x1                 | 500               |  0.1                  |  53.8/63 = 0.854     |
+| 2   | 7x4x7x1                 | 500               |  0.2                  |  47.7/63 = 0.757     |
+| 3   | 7x4x7x1                 | 500               |  0.3                  |  54.1/63 = 0.858     |
+| 4   | 7x4x7x1                 | 500               |  0.4                  |  46.1/63 = 0.732     |
+| 5   | 7x4x7x1                 | 500               |  0.5                  |  45.3/63 = 0.719     |
+
+D'après ces observations, on conclut que le taux d'apprentissage 0.3 est le meilleur dans ces conditions. On observe toutefois une très grande variabilité dans les résultats obtenus : il semble donc que ce critère ne soit pas le plus déterminant dans l'objectif d'un réseau le plus fiable possible.
+
+On va dès lors fixer le taux d'apprentissage, et essayer plusieurs valeurs de nombre d'époques afin de déterminer, encore une fois empiriquement, le meilleur nombre observé. On a graduellement sélectionné des valeurs de nombre d'époques de l'ordre de grandeur des centaines aux milliers, et avons ainsi choisi les valeurs 128, 256, 512, 1024 et 2048 pour nos observations. Voici les résultats :  
+
+| Id  |  Architecture du réseau |  Nombre d'époques |  Taux d'apprentissage | Taux de succès moyen |
+| --- | ----------------------- | ----------------- | --------------------- | -------------------  |
+| 1   | 7x4x7x1                 | 128               |  0.3                  |  46.7/63 = 0.741     |
+| 2   | 7x4x7x1                 | 256               |  0.3                  |  48.6/63 = 0.771     |
+| 3   | 7x4x7x1                 | 512               |  0.3                  |  50.2/63 = 0.797     |
+| 4   | 7x4x7x1                 | 1024              |  0.3                  |  51.1/63 = 0.811     |
+| 5   | 7x4x7x1                 | 2048              |  0.3                  |  51.9/63 = 0.824     |
+
+D'après ces résultats, on constate que plus le nombre d'époques augmente, et plus le taux de succès s'améliore. Toutefois, ces résultats sont à prendre avec précaution puisqu'ils sont calculés sur de petits échantillons et présentent encore ici une grande variance dans leurs valeurs individuelles. De ce fait, 2048 époques semble la meilleure option étant donné les expériences menées, mais ce paramètre ne semble pas non plus être le plus déterminant.
+
+Il nous reste la possibilité de modifier maintenant l'architecture du réseau pour tenter d'améliorer son apprentissage. Nous ne changerons pas le nombre de couches en entrée et en sortie, qui dépendent directement de la formulation du problème et de ses données. On peut donc jouer sur le nombre de couches internes ainsi que leur taille. Jusqu'ici, nous avons expérimenté 2 couches internes et respectivement 4 et 7 neurones par couche. Nous pouvons essayer de modifier d'abord le nombre de couches internes puis ensuite leur taille : essayons avec 1, 2 et 3 couches internes, puis avec 5, 10 et 20 neurones par couche pour chacun des cas. On choisi donc 2048 époques et un taux d'apprentissage de 0.3. Voici les résultats : 
+
+Une couche interne :
+
+| Id  |  Architecture du réseau |  Nombre d'époques |  Taux d'apprentissage | Taux de succès moyen |
+| --- | ----------------------- | ----------------- | --------------------- | -------------------  |
+| 1   | 7x4x5x1                 | 2048               |  0.3                  |  49.2/63 = 0.781     |
+| 2   | 7x4x5x1                 | 2048               |  0.3                  |  49.6/63 = 0.787     |
+| 3   | 7x4x5x1                 | 2048               |  0.3                  |  45.3/63 = 0.719     |
+
+Deux couches internes :
+
+| Id  |  Architecture du réseau |  Nombre d'époques |  Taux d'apprentissage | Taux de succès moyen |
+| --- | ----------------------- | ----------------- | --------------------- | -------------------  |
+| 1   | 7x4x5x2                 | 2048               |  0.3                  |  53.1/63 = 0.843     |
+| 2   | 7x4x5x2                 | 2048               |  0.3                  |  54.3/63 = 0.862     |
+| 3   | 7x4x5x2                 | 2048               |  0.3                  |  50.1/63 = 0.795     |
+
+Trois couches internes :
+
+| Id  |  Architecture du réseau |  Nombre d'époques |  Taux d'apprentissage | Taux de succès moyen |
+| --- | ----------------------- | ----------------- | --------------------- | -------------------  |
+| 1   | 7x4x5x3                 | 2048               |  0.3                  |  46.6/63 = 0.740     |
+| 2   | 7x4x5x3                 | 2048               |  0.3                  |  47.3/63 = 0.751     |
+| 3   | 7x4x5x3                 | 2048               |  0.3                  |  45.0/63 = 0.714     |
+
+
+On observe dans les trois nombres de couches une même tendance : le taux de succès moyen est le plus haut pour 10 neurones, proche de celui à 5 neurones, puis on observe enfin un taux de succès pour 20 neurones significativement plus bas. Maintenant, concernant le nombre de couches internes, on observe un maximum de taux de succès pour deux couches internes.
+
+Ainsi, le taux de succès maximal observé est de 86.2% pour 2 couches internes de 10 neurones chacune, avec un taux d'apprentissage de 0.3 et un nombre d'époques de 2048. Ces valeurs d'hyper-paramètres sont toutefois loin d'être optimales, car basées sur une évaluation empirique lui même considéré sur un échantillonnage d'une plage de valeur qui limite forcément les résultats. On observe enfin que c'est surtout le nombre de couches internes et le nombre de neurones associés qui caractérise le plus le taux de succès de la classification, pour ce jeu de données en particulier et sur les plages de valeurs choisies pour l'échantillonnage. 
